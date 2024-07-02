@@ -23,8 +23,8 @@
             transform: translate(0, 0)
         }
         to {
-            background-position-x: 1000px;
-            /* transform: translate(0, 0) */
+            background-position-y: 100px;
+            transform: translate(0, 1000)
         }
     }
 
@@ -74,6 +74,79 @@
     .vorota:hover > .dver_right {
             transform: rotateY(-80deg);
         }
+
+    @media screen and (max-width:1000px) {
+        body {
+        background-color: aqua;
+        background-image: url("/img104.jpg");
+        background-size: 240px;
+        animation: cloud 2s linear infinite;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    @keyframes cloud {
+        from {
+            background-position-x: 0;
+            transform: translate(0, 0)
+        }
+        to {
+            background-position-x: 1000px;
+            /* transform: translate(0, 0) */
+        }
+    }
+
+    .vorota {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            perspective: 1000px;
+        }
+
+    h1 {
+            position: absolute;
+            z-index: -1;
+            font-family: fantasy;
+            font-weight: bold;
+            font-size: 50pt;
+            transition: 1s;
+            text-align: center;
+            color: rgb(221, 6, 6);
+            
+        }
+
+    h1:hover {
+            transform: scale(1.5);
+            border: 3px double rgb(2, 102, 15);
+        }
+
+    .dver {
+            width: 1000px;
+            height: 600px;
+            background-color: #f08d54;
+            transition: all 1s;
+            border: 4px double black;
+        }
+
+    .dver_left {
+            transform-origin: left;
+        }
+
+    .dver_right {
+            transform-origin: right;
+        }
+
+    .vorota:hover > .dver_left {
+            transform: rotateY(80deg);
+        }
+
+    .vorota:hover > .dver_right {
+            transform: rotateY(-80deg);
+        }
+    }
  
 </style>
 

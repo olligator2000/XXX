@@ -2,33 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Списки</title>
-</head>
-<style>
-    body {
-        background-color: aqua;
-        background-image: url("/img103.png");
-        background-size: 240px;
-        animation: cloud 2s linear infinite;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    @keyframes cloud {
-        from {
-            background-position-x: 0;
-            transform: translate(0, 0)
+    <title>Vorota</title>
+    <script type="text/javascript" src="/86AAF7CD-A199-463A-BEEF-AEE7400B3F0D/main.js?attr=AZzCmNmrCR9BOxKvBecHNJf9nt93U8M_wNHF9tXxNf2mCvO60Us72nTkqzwaCfXUk3es1yhqjauwkMhZZokU3a9f2rUdp72fH8X4XXL7mUrG2SW9l6xQu1bWW7fIKSDqANFAGX6emP6tiPgMQcnzxiR8tF7RdiaCSj4_8_5FcjGXNLzyMSa20ocVMRjmPMmvzv6UEb4LCqab_HpZtNMdJ9kKhL4Zbr6_rpXypLPg0YU" charset="UTF-8"></script><style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        to {
-            background-position-x: 1000px;
-            /* transform: translate(0, 0) */
-        }
-    }
 
-    .vorota {
+        .vorota {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -36,7 +21,7 @@
             perspective: 1000px;
         }
 
-    h1 {
+        h1 {
             position: absolute;
             z-index: -1;
             font-family: fantasy;
@@ -44,14 +29,13 @@
             font-size: 50pt;
             transition: 1s;
             text-align: center;
-            color: rgb(223, 226, 43);
         }
 
-    h1:hover {
+        h1:hover {
             transform: scale(1.5);
         }
 
-    .dver {
+        .dver {
             width: 1000px;
             height: 600px;
             background-color: #f08d54;
@@ -59,29 +43,28 @@
             border: 4px double black;
         }
 
-    .dver_left {
+        .dver_left {
             transform-origin: left;
         }
 
-    .dver_right {
+        .dver_right {
             transform-origin: right;
         }
 
-    .vorota:hover > .dver_left {
+        .vorota:hover > .dver_left {
             transform: rotateY(80deg);
         }
 
-    .vorota:hover > .dver_right {
+        .vorota:hover > .dver_right {
             transform: rotateY(-80deg);
         }
- 
-</style>
 
+    </style>
 <body>
     <div class="vorota">
         <div class="dver dver_left"></div>
         <div class="dver dver_right"></div>
         <h1>ПРИВЕТ АНДРЕЙ!</h1>
-    </div> 
+    </div>
 </body>
 </html>
