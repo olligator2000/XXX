@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Списки</title>
+</head>
+<body>
+    <style>
+        
+        /* ol {
+            list-style-type:lower-latin;
+        }
+
+        ul {
+            list-style: url("Безымянный.png");
+            
+        }
+
+        ul li {
+            position: relative;
+            left: +10px;
+        }
+     */
+        ul {
+            list-style: none;
+            position: relative;
+            left: 50%;
+
+        }
+
+        ul li::before {
+
+            content: url(/markers/actress-icon.png);
+            position: fixed;
+            left: 10px;
+            
+        }
+
+    </style>
+
+    <h2>Упорядочный список</h2>
+    <ol>
+        <li>Апельсин</li>
+        <li>Лимон</li>
+        <li>Арбуз</li>
+        <li>Мандарин</li>
+    </ol>
+
+    <hr>
+
+    <h2>Неупорядочный список</h2>
+    <ul>
+        <li>Апельсин</li>
+        <li>
+            <ol>
+                <li>Первый</li>
+                <li>Второй</li>
+                <li>Третий</li>
+            </ol>
+        </li>
+        <li>Арбуз</li>
+        <li>Мандарин</li>
+    </ul>
+    
+    <hr>
+
+    <h2>Список определений</h2>
+    <dl>
+        <dt>Апельсин1</dt>
+        <dd>Лимон1</dd>
+        <dt>Апельсин2</dt>
+        <dd>Лимон2</dd>
+    </dl>
+
+    <hr>
+</body>
+</html>

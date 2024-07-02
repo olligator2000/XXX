@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Списки</title>
+</head>
+<style>
+
+    b:first-child {
+        color: brown;
+    }   
+
+    b:last-child {
+        color: rgb(48, 184, 66);
+    }  
+
+    span:only-child {
+        color: rgb(48, 50, 184);
+    }  
+    /* Все четные */
+    b:nth-child(odd) {
+        color: rgb(184, 164, 48);
+    } 
+/*     
+    /* Все нечетные */
+    b:nth-child(even) {
+        color: rgb(184, 164, 48);
+    }
+
+     /* функция */
+     b:nth-child(2n+2) {
+        color: rgb(184, 48, 48);
+    }
+    
+</style>
+
+<body>
+
+    <p>
+        <b>Lorem</b> ipsum dolor sit amet <b>consectetur</b>, adipisicing <b>dolor</b> elit.<b>dolor</b> Eligendi, <b>dolor</b>molestias!
+    </p>
+    <p>
+        <b>Lorem</b> ipsum <b>dolor</b> sit <b>dolor</b> amet consectetur <b>dolor</b>, <span>adipisicing</span> elit. Eligendi, <b>molestias!</b>
+    </p>
+    <p>
+        <b>Lorem</b> ipsum dolor sit amet <b>consectetur</b>, adipisicing <b>dolor</b> elit.<b>dolor</b> Eligendi, <b>dolor</b>molestias!
+    </p>
+    <p>
+        <b>Lorem</b> ipsum <b>dolor</b> sit <b>dolor</b> amet consectetur <b>dolor</b>, <span>adipisicing</span> elit. Eligendi, <b>molestias!</b>
+    </p>
+ 
+</body>
+</html>
