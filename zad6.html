@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: Verdana, Geneva, sans-serif;
+            background-color: #d4d4d4;
+        }
+
+        article {
+            width: 1000px;
+            margin: 40px auto;
+            padding: 20px 150px 60px;
+            background-color: #f0f0f0;
+            box-shadow:  30px 20px 16px rgba(0, 0, 0, 0.7);
+        }
+
+        #main { 
+            /* border: 2px solid #ddd;  */
+            border-left: 2px solid #ddd;
+            border-right: 2px solid #ddd;
+            border-bottom: 2px solid #ddd;
+        }
+
+        #logo { 
+            float: left; 
+            
+        }
+
+        #slogan {
+            float: right;
+            font-style: italic;
+            font-weight: normal;
+            font-size: .7rem;
+            text-align: right;
+            color: #909090;
+            width: 30%;
+        }
+        
+        h1, h2, h3 { 
+            font-family: 'Century Gothic', monospace;
+        }
+
+        #logo img {
+            width: 100px;
+            
+        }
+        
+        .clearfix::before, .clearfix::after, .block::before, .block::after {
+            content: "";
+            display: table;
+        }
+        .clearfix::after, .block:after { 
+            clear: both; 
+        }
+
+        header {
+            display: flow-root;
+        }
+
+        .block img {
+            width: 21%;
+            border: 2px solid #ddd;
+            border-radius: 40%;
+        }
+
+        .alignleft {
+            float: left;
+            margin-right: 15px;
+        }
+
+        .alignright {
+            float: right;
+            margin-left: 15px;
+        }
+
+        .block { 
+            padding: 10px; 
+            
+        }
+
+        .block:nth-child(odd) {
+            background-color: #f8f8f8;
+            border-bottom: 2px solid #ddd;
+            border-top: 2px solid #ddd;
+        }
+
+        .button1 {
+            display: flow-root;
+            width: 100px;
+            height: 70px;
+            border-radius: 10%;
+            right: 200px;
+            cursor: pointer;
+
+            
+        }
+
+        .button1:hover:focus {
+            background-color: rgb(225, 209, 238);
+            box-shadow: 0 10px 10px #807b7b;
+            transition: 1s;
+            
+        }
+
+
+
+       
+
+    </style  >
+        
+<body>
+    <article>
+        <header class="clearfix">
+            <div id="logo">
+                <img src="logo.png" alt="Logo">
+            </div>
+            <div id="slogan">
+                <h1>Daily Deals for Creative Professionals</h1>
+            </div>
+        </header>
+        <div id="main">
+            <div class="block">
+                <h2>Here is what InkyDeals is all about</h2>
+                 <p>We’ve made a lot of friends along Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore corrupti, quam eos necessitatibus iste minima vitae officiis nam nesciunt perspiciatis fugit officia sit cumque, a, in voluptatum beatae. Cum, reiciendis.</p>
+            </div>
+            <div class="block">
+                <img src="zvezda.png" class="alignleft" alt="Stars">
+                <h3>Average user rating:</h3>
+                <p>The average user rating for our deals was <strong>4.5 out of 5 stars</strong></p>
+            </div>
+            <div class="block">
+                <img src="dollar.png" class="alignright" alt="Saving $">        
+                <h3>Total saved by member:</h3>
+                <p>InkyDeals members have saved <strong>$28,320,804</strong> in 2018 alone.</p>
+            </div>         
+            <div class="block">
+                <img src="procent.png" class="alignleft" alt="Saving %"> 
+                <h3>More than 78% of our … </h3>
+                <p>The average discount for our products was <strong>93.40%</strong></p>
+            </div>
+        </div> <!-- /#main -->
+
+        <button class="button1" >Привет!</button>
+
+        
+    </article>
+</body>
+</html>
