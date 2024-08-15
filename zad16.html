@@ -358,6 +358,7 @@
         var umn = String("*");
         var minus = String("-");
         var plus = String("+");
+        while (true) { 
         var x = parseInt(prompt("Введите первое число"));
         if (isNaN(x)) {
             alert("Вы ввели не число!");
@@ -371,6 +372,7 @@
                 if (isNaN(y)) {
                     alert("Вы ввели не число!")
                 } else if(symbol == "/") {
+                    if(y == 0)
                 answer =  x / y
                 } else if(symbol == "*") {
                 answer =  x * y
@@ -382,10 +384,12 @@
                 alert(answer);                
                 } 
             if (confirm("Хотите еще решить пример?")) {
-                
-                } 
+                    continue;
+                } else {
+                    break;
+                }
             }
-       
+        }
 
         
         
