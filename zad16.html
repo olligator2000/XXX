@@ -354,19 +354,20 @@
         // ----------------------Задание 6      
         // Зациклить калькулятор. Запросить у пользователя 2 числа и знак, решить пример, вывести результат и спросить, хочет ли он решить еще один пример. И так до тех пор, пока пользователь не откажется.
         var answer = 0;
-        var del = parseInt("/");
-        var umn = parseInt("*");
-        var minus = parseInt("-");
-        var plus = parseInt("+");
+        var del = String("/");
+        var umn = String("*");
+        var minus = String("-");
+        var plus = String("+");
         var x = parseInt(prompt("Введите первое число"));
         if (isNaN(x)) {
             alert("Вы ввели не число!");
         } else {
-            var symbol = prompt("Введите операцию '/' или '*' или '-' или '+'");
-            // var operator = String(symbol);
-            if ((symbol != del) || (symbol != umn) || (symbol != minus) || (symbol != plus)) {
-                alert("Вы ввели неверный оператор!");
-            } else {
+            var symbol = String(prompt("Введите операцию '/' или '*' или '-' или '+'"));
+            // var operators = String(symbol);
+            // if ((operators !== del) || (operators !== umn) || (operators !== minus) || (operators !== plus)) {
+            //     alert("Вы ввели неверный оператор!");
+            // } else {
+
                 var y = parseInt(prompt("Введите второе число"));
                 if (isNaN(y)) {
                     alert("Вы ввели не число!")
@@ -379,9 +380,12 @@
                 } else if(symbol == "+") {
                 answer =  x + y
                 }
-                alert(answer);
-                }   
-            }
+                alert(answer);                
+                } 
+            if (confirm("Хотите еще решить пример?")) {
+                return;
+            }  
+            
        
 
         
