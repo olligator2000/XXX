@@ -353,7 +353,7 @@
         // alert("Были введены числа [" + numbers + "]: из них " + "Положительных чисел = " + positive_numbers + " Отрицательных чисел = " + negative_numbers + " Нолей = " + zero_numbers + " Четных чисел = " + even_numbers + " Нечетных чисел = " + odd_numbers);
         // ----------------------Задание 6      
         // Зациклить калькулятор. Запросить у пользователя 2 числа и знак, решить пример, вывести результат и спросить, хочет ли он решить еще один пример. И так до тех пор, пока пользователь не откажется.
-        var answer = 0;
+       var answer = 0;
         var del = String("/");
         var umn = String("*");
         var minus = String("-");
@@ -364,10 +364,9 @@
         } else {
             var symbol = String(prompt("Введите операцию '/' или '*' или '-' или '+'"));
             // var operators = String(symbol);
-            // if ((operators !== del) || (operators !== umn) || (operators !== minus) || (operators !== plus)) {
-            //     alert("Вы ввели неверный оператор!");
-            // } else {
-
+            if ((symbol !== del) && (symbol !== umn) && (symbol !== minus) && (symbol !== plus)) {
+                alert("Вы ввели неверный оператор!");
+            } else {
                 var y = parseInt(prompt("Введите второе число"));
                 if (isNaN(y)) {
                     alert("Вы ввели не число!")
@@ -383,9 +382,9 @@
                 alert(answer);                
                 } 
             if (confirm("Хотите еще решить пример?")) {
-                return;
-            }  
-            
+                
+                } 
+            }
        
 
         
