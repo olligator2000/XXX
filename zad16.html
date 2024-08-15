@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text</title>
+    <style>
+        
+    </style  >
+    <script>
+        
+        // let zapros;
+        // zapros = (confirm("Подтверждаете?")) ? "«Подтверждено»" : "«Отменено»"
+        // alert(zapros);
+        // ----------------------
+        // let password = prompt("Введите пароль");
+        // switch(password) {
+        //     case "Web":
+        //     description = "«Подтверждено»";
+        //     break;
+        //     case "Step":
+        //     description = "«Подтверждено»";
+        //     break;
+        //     case "Rep":
+        //     description = "«Подтверждено»";
+        //     break;
+        //     default:
+        //         description = "«Отменено»";
+        // }
+        // alert(description);
+        // ----------------------
+        // let answer
+        // let x = +prompt("Введите число Х:");
+        // answer = (x >= 0 & x<=100) ? "принадлежит" : "не принадлежит";
+        // alert(answer);
+        // ----------------------
+        // let x = +prompt("Введите число Х:");
+        //     if (isNaN(x)) {alert("Были введены на цифры");}
+        // let y = +prompt("Введите число Y:");
+        //     if (isNaN(y)) {alert("Были введены на цифры");}
+        // if (x<y) {alert("x<y");} 
+        // if (x>y) {alert("x>y");} 
+        // if (x==y) {alert("x=y");} 
+        // ----------------------
+        // let x = +prompt("Введите число");
+        // if (x<0 || x>300) {alert("Не принадлежит ни одному диапазону");}
+        // if (x>=0 & x<=100) {alert("Принадлежит диапазону 0..100");}
+        // if (x>=101 & x<=200) {alert("Принадлежит диапазону 101..200");}
+        // if (x>=201 & x<=300) {alert("Принадлежит диапазону 201..300");}
+        // ----------------------
+        // let proc = +prompt("Введите процент годовых");
+        // let summVklad = +prompt("Введите сумму вклада");
+        // let sumEnd = +prompt("Введите конечную сумму вклада для снятия");
+        // let time = 0;
+        // while (summVklad < sumEnd)  {
+            
+        //     time++;
+        //     // summVklad += summVklad * (proc/100);
+        //     summVklad=((proc/100)*summVklad)+summVklad; 
+        // }
+        // alert(time);
+        // ----------------------
+        // let fund = +prompt("Initial deposit:");
+        // let years = 0;
+        // while(fund < 1e6){
+        // years++;
+        // fund += fund * 0.1; // 0.1 = 10%
+        // }
+        // alert("You’ll become millionaire after" + years + " years");
+        // ----------------------
+        // var limit = 3;
+        // var numbers = 0, number;
+        // while(numbers < limit){
+        // number = +prompt("Type number:");
+        // console.log(number);
+        // numbers++;
+        // }
+        // ----------------------
+        // let txt
+        
+        // do
+        // txt = prompt("Confirm: yes or no") 
+        // while(txt!="yes" && txt!="no") {
+        //     switch(txt) {
+        //     case "yes": 
+        //         alert("Добро пожаловать");
+        //             break;
+        //     case "no": 
+        //         alert("Покеда");
+        //             break;
+        //     }
+        // };
+        // ----------------------
+        // for(i=0; i<5; i++)
+        // console.log(i); 
+        // ----------------------
+        // i=0;
+        // for( ; ; ) {
+        // console.log(i);
+        // ++i;
+        // if(i>4)
+        // break;
+        // }
+        // ----------------------
+        // fund = +prompt("Введите сумму кредита");
+        // time = +prompt("На сколько лет берёте кредит?")
+        // creditBody = fund + 0.2*fund*time;
+        // timeMonth = time*12;
+        // monthlyPayment = creditBody / timeMonth;
+        // for(i=1; i<=timeMonth; i++)
+        // console.log("month " + i + " payment "+monthlyPayment);
+        // ----------------------
+        // fund = +prompt("Credit sum");
+        // months = +prompt("Credit term (months)");
+        // creditBody = fund + 0.2 * fund * months / 12;
+        // monthlyPayment = creditBody / months;
+        // for(i=1; i<= months; i++)
+        // console.log("month " + i + " payment " + monthlyPayment);
+
+
+
+        // Задания, в которых необходимо использовать IF---------------
+        // ----------------------Задание 1
+        // let x = +prompt("Введите число:");
+        // if (x > 0) {
+        //     alert("Число положительное");
+        // } else if (x < 0) {
+        //     alert("Число отрицательное");
+        // } else {
+        //     alert("Число равно 0");
+        // }
+        // ----------------------Задание 2
+        // let x = +prompt("Введите свой возраст:");
+        // if (x > 0 && x<120) {
+        //     alert('Вам ' + x + ' лет. Вы действительно живой человек!');
+        // } else {
+        //     alert("А вы точно человек?"); 
+        // }
+        // ----------------------Задание 3
+        // let x = +prompt("Введите любое число:");
+        // alert('Модуль числа ' + x + ' будет ' + Math.abs(x));
+        // ----------------------Задание 4
+        // let hours = +prompt("Введите который сейчас час");
+        // let minutes = +prompt("Введите сколько минут сейчас");
+        // let seconds = +prompt("Введите сколько секунд сейчас");
+        // if (hours >= 0 && hours <=23 && minutes >= 0 && minutes <= 59 && seconds >= 0 && seconds <= 59 ) {
+        //     alert("Да, такое время реально");
+        // } else {
+        //     alert("Да вы врете батенька!");
+        // }
+        // ----------------------Задание 5
+        // let x = +prompt("Введите координату X");
+        // let y = +prompt("Введите координату Y");
+        // if (x > 0 && y > 0) {
+        //     alert("Ваша точка находится в I четверти");
+        // } else if (x < 0 && y > 0) {
+        //     alert("Ваша точка находится в II четверти");
+        // } else if (x < 0 && y < 0) {
+        //     alert("Ваша точка находится в III четверти");
+        // } else if (x > 0 && y < 0) {
+        //     alert("Ваша точка находится в IV четверти");
+        // } else if (x == 0 && y > 0 || y < 0) {
+        //     alert("Ваша точка находится на оси Y");
+        // } else if (x > 0 || x < 0 && y == 0) {
+        //     alert("Ваша точка находится на оси X");
+        // } else {
+        //     alert("Вы ввели не корректные данные");
+        // }
+
+        // Задания, в которых необходимо использовать SWITCH---------------
+        // ----------------------Задание 1
+        // let month = +prompt("Введите номер месяца");
+        // switch(month) {
+        //     case 1:
+        //         alert("Это январь");
+        //         break;
+        //     case 2:
+        //         alert("Это февраль");
+        //         break;
+        //     case 3:
+        //         alert("Это март");
+        //         break;
+        //     case 4:
+        //         alert("Это апрель");
+        //         break;
+        //     case 5:
+        //         alert("Это май");
+        //         break;
+        //     case 6:
+        //         alert("Это июнь");
+        //         break;
+        //     case 7:
+        //         alert("Это июль");
+        //         break;
+        //     case 8:
+        //         alert("Это август");
+        //         break;
+        //     case 9:
+        //         alert("Это сентябрь");
+        //         break;
+        //     case 10:
+        //         alert("Это октябрь");
+        //         break;
+        //     case 11:
+        //         alert("Это ноябрь");
+        //         break;
+        //     case 12:
+        //         alert("Это декабрь");
+        //         break;
+        //     default:
+        //         alert("Ввели некорректные данные");
+        //         break;
+        // }
+        // ----------------------Задание 2
+        // let userDataOne = +prompt("Введите первое число");
+        // let userDataOperator = prompt("Введите нужный оператор (+ - * /)");
+        // let userDataTwo = +prompt("Введите второе число");
+        // switch(userDataOperator) {
+        //     case "+":
+        //         alert(userDataOne + userDataTwo);
+        //         break;
+        //     case "-":
+        //         alert(userDataOne - userDataTwo);
+        //         break;
+        //     case "*":
+        //         alert(userDataOne * userDataTwo);
+        //         break;
+        //     case "/":
+        //         alert(userDataOne / userDataTwo);
+        //         break;
+        //     default:
+        //         alert("Вы ввели некоректные данные");
+        //         break;
+        // }
+        //Задания, в которых необходимо использовать тернарный оператор---------------
+        // ----------------------Задание 1
+        //    let x = +prompt("Введите первое число");
+        //    let y = +prompt("Введите второе число");
+        //    (x > y) ? alert(x + '>' + y) : (x < y) ? alert(x + '<' + y) : alert(x + '=' + y);
+        // ----------------------Задание 2
+        //    let x = +prompt("Введите любое число");
+        //    (x % 5==0) ? alert("Число " + x + " кратно 5") : alert("Число " + x + " не кратно 5");
+        // ----------------------Задание 3
+        // let planet = prompt("Введите название вашей планеты");
+        // (planet === "Земля" || planet === "земля") ? alert("Привет Землянин!") : alert("Привет Инопланетянин!");
+        
+
+        //--------------------------------
+        // Вам необходимо самостоятельно решить, для какого задания какой цикл лучше использовать: WHILE, DO WHILE или FOR.
+        // ----------------------Задание 1
+        // Подсчитать сумму всех чисел в заданном пользователем диапазоне. 
+        // let x = +prompt("Введите нижний предел диапазона");
+        // let y = +prompt("Введите верхний предел диапазона");
+        // let sum = 0;
+        // if (x < y) {
+        //     while(x <= y) {
+        //     sum = sum + x;
+        //     x++;
+        //     }
+        //     alert("Сумма диапазона равна " + sum);
+        // } else if (x > y) {
+        //     alert("Введите сначала нижний предел диапазона"); 
+        // } else if (x === y) {
+        //     alert("Сумма диапазона равна " + x);
+        // } else {
+        //     alert("Вы ввели некорректные данные");
+        // }
+        // ----------------------Задание 2
+        // Запросить 2 числа и найти только наибольший общий делитель
+        // var x = +prompt('Задайте первое число');
+        // var y = +prompt('Задайте второе число');
+        // var delitel = 0;
+        // var i = 1;
+        // if (x <= 0 || y <= 0) {
+        //     alert('Числа должны быть больше нуля');
+        // } else if (x <= y ) { 
+        //     do {
+        //         if (x % i == 0 && y % i == 0) {
+        //             delitel = i;
+        //         }
+        //         i++;
+        //     }
+        //     while (i <= x); 
+        //     alert('НОД ( ' + x + ' и ' + y + ' ) = ' + delitel);
+            
+        // } else if (x >= y ) { 
+        //     do {
+        //         if (x % i == 0 && y % i == 0) {
+        //             delitel = i;
+        //         }
+        //         i++;
+        //     }
+        //     while (i <= y);
+        //     alert('НОД ( ' + x + ' и ' + y + ' ) = ' + delitel);
+        // }
+        // ----------------------Задание 3
+        // Запросить у пользователя число и вывести все делители этого числа.
+        // var x = parseInt(prompt('Введите положительное число'));
+        // var delitel = 0;
+        // var array = [];
+        // if (x <= 0) {
+        //     alert('Числа должны быть больше нуля');
+        // } else {
+        //     for(i = 1; i <= x; i++) {
+        //         if(x % i == 0) {
+        //             delitel = i;
+        //             array.push(delitel);
+        //         }
+        //     }
+        //     alert("Все делители числа " + x + " = " + array);
+        // }
+        // ----------------------Задание 4
+        // Определить количество цифр в введенном числе.
+        // var x = parseInt(prompt("Введите число"));
+        // if (isNaN(x)) {
+        //     alert("Введите число!!!");
+        // } else if(x <= 0) {
+        //     alert("Колличество цифр в числе " + x + " равно " + (Math.abs(x) + "").length);
+        // } else {
+        //     alert("Колличество цифр в числе " + x + " равно " + (x + "").length);
+        // }
+        // ----------------------Задание 5   
+        // Запросить у пользователя 10 чисел и подсчитать, сколько он ввел положительных, отрицательных и нулей. При этом
+        // также посчитать, сколько четных и нечетных. Вывести статистику на экран. Учтите, что достаточно одной переменной (не 10) для ввода чисел пользователем.
+        // var numbers = [];
+        // var positive_numbers = 0;
+        // var negative_numbers = 0;
+        // var zero_numbers = 0;
+        // var even_numbers = 0;
+        // var odd_numbers = 0;
+        // for(i = 1; i < 11; i++) {
+        //     var x = parseInt(prompt("Введите любые 10 чисел"));
+        //     if(x > 0) {
+        //         positive_numbers++;
+        //         if(x % 2 == 0) {
+        //         even_numbers++;
+        //         } else {
+        //         odd_numbers++;
+        //         }
+        //     } else if(x < 0) {
+        //         negative_numbers++;
+        //         if(x % 2 == 0) {
+        //         even_numbers++;
+        //         } else {
+        //         odd_numbers++;
+        //         }
+        //     } else if(x == 0) {
+        //         zero_numbers++;
+        //     } 
+        //     numbers.push(x);
+        // }
+        // alert("Были введены числа [" + numbers + "]: из них " + "Положительных чисел = " + positive_numbers + " Отрицательных чисел = " + negative_numbers + " Нолей = " + zero_numbers + " Четных чисел = " + even_numbers + " Нечетных чисел = " + odd_numbers);
+        // ----------------------Задание 6      
+        // Зациклить калькулятор. Запросить у пользователя 2 числа и знак, решить пример, вывести результат и спросить, хочет ли он решить еще один пример. И так до тех пор, пока пользователь не откажется.
+        var answer = 0;
+        var del = parseInt("/");
+        var umn = parseInt("*");
+        var minus = parseInt("-");
+        var plus = parseInt("+");
+        var x = parseInt(prompt("Введите первое число"));
+        if (isNaN(x)) {
+            alert("Вы ввели не число!");
+        } else {
+            var symbol = prompt("Введите операцию '/' или '*' или '-' или '+'");
+            // var operator = String(symbol);
+            if ((symbol != del) || (symbol != umn) || (symbol != minus) || (symbol != plus)) {
+                alert("Вы ввели неверный оператор!");
+            } else {
+                var y = parseInt(prompt("Введите второе число"));
+                if (isNaN(y)) {
+                    alert("Вы ввели не число!")
+                } else if(symbol == "/") {
+                answer =  x / y
+                } else if(symbol == "*") {
+                answer =  x * y
+                } else if(symbol == "-") {
+                answer =  x - y
+                } else if(symbol == "+") {
+                answer =  x + y
+                }
+                alert(answer);
+                }   
+            }
+       
+
+        
+        
+        
+          
+
+        
+    </script> 
+<body>
+    
+    
+</body>
+</html>
