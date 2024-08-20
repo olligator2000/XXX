@@ -353,49 +353,138 @@
         // alert("Были введены числа [" + numbers + "]: из них " + "Положительных чисел = " + positive_numbers + " Отрицательных чисел = " + negative_numbers + " Нолей = " + zero_numbers + " Четных чисел = " + even_numbers + " Нечетных чисел = " + odd_numbers);
         // ----------------------Задание 6      
         // Зациклить калькулятор. Запросить у пользователя 2 числа и знак, решить пример, вывести результат и спросить, хочет ли он решить еще один пример. И так до тех пор, пока пользователь не откажется.
-       var answer = 0;
-        var del = String("/");
-        var umn = String("*");
-        var minus = String("-");
-        var plus = String("+");
-        while (true) { 
-        var x = parseInt(prompt("Введите первое число"));
-        if (isNaN(x)) {
-            alert("Вы ввели не число!");
-        } else {
-            var symbol = String(prompt("Введите операцию '/' или '*' или '-' или '+'"));
-            // var operators = String(symbol);
-            if ((symbol !== del) && (symbol !== umn) && (symbol !== minus) && (symbol !== plus)) {
-                alert("Вы ввели неверный оператор!");
-            } else {
-                var y = parseInt(prompt("Введите второе число"));
-                if (isNaN(y)) {
-                    alert("Вы ввели не число!")
-                } else if(symbol == "/") {
-                    if(y == 0)
-                answer =  x / y
-                } else if(symbol == "*") {
-                answer =  x * y
-                } else if(symbol == "-") {
-                answer =  x - y
-                } else if(symbol == "+") {
-                answer =  x + y
-                }
-                alert(answer);                
-                } 
-            if (confirm("Хотите еще решить пример?")) {
-                    continue;
-                } else {
-                    break;
+        // var answer = 0;
+        // while (true) {
+        //     var x = parseInt(prompt("Введите первое число"));
+        //     if (isNaN(x)) {
+        //         alert("Вы ввели не число!");
+        //         if (confirm("Хотите еще решить пример?")) {
+        //                 continue;
+        //             } else {
+        //                 break;
+        //             }
+        //     } else {
+        //         var symbol = String(prompt("Введите операцию '/' или '*' или '-' или '+'"));
+        //         if ((symbol !== "/") && (symbol !== "*") && (symbol !== "-") && (symbol !== "+")) {
+        //             alert("Вы ввели неверный оператор!");
+        //         } else {
+        //             var y = parseInt(prompt("Введите второе число"));
+        //             if (isNaN(y)) {
+        //                 alert("Вы ввели не число!");
+        //                 break;
+        //             } else if(symbol == "/") { 
+        //                 if (y == 0) {
+        //                     alert("На ноль делить нельзя!");
+        //                     if (confirm("Хотите еще решить пример?")) {
+        //                         continue;
+        //                     } else {
+        //                         break;
+        //                     }
+        //                 } else {
+        //                     answer =  x / y;
+        //                 }
+        //             } else if(symbol == "*") {
+        //                 answer =  x * y;
+        //             } else if(symbol == "-") {
+        //                 answer =  x - y;
+        //             } else if(symbol == "+") {
+        //                 answer =  x + y;
+        //             }
+        //             alert(answer);                
+        //             } 
+        //             if (confirm("Хотите еще решить пример?")) {
+        //                 continue;
+        //             } else {
+        //                 break;
+        //             }
+        //     } 
+        // }
+        // ----------------------Задание 7     
+        // Запросить у пользователя число и на сколько цифр его сдвинуть. Сдвинуть цифрычисла и вывести результат (если число 123456 сдвинуть на 2 цифры, то получится 345612).
+        
+            // var number = prompt("Введите число").split('');
+            //     var step = parseInt(prompt("Введите на сколько сдвинуть число число"));
+            //         for (var i = 0; i < step; i++) {
+            //             var arr = number[0];
+            //             for (var j = 1; j < number.length; j++) {
+            //                 number[j-1] = number[j];
+            //                 number[j] = number[j+1];
+            //             }
+            //             number[number.length-1] = arr;
+            //         }
+            // alert(number.join(''));
+        // ----------------------Задание 8     
+        // Зациклить вывод дней недели таким образом: «День недели. Хотите увидеть следующий день?» и так до тех пор, пока пользователь нажимает OK. 
+        
+        // while (true) {
+        //     if (confirm("Понедельник. Хотите увидеть следующий день?")) {
+        //         if (confirm("Вторник. Хотите увидеть следующий день?")) {
+        //             if (confirm("Среда. Хотите увидеть следующий день?")) {
+        //                 if (confirm("Четверг. Хотите увидеть следующий день?")) {
+        //                     if (confirm("Пятница. Хотите увидеть следующий день?")) {
+        //                         if (confirm("Суббота. Хотите увидеть следующий день?")) {
+        //                             if (confirm("Воскресенье. Хотите увидеть следующий день?")) {
+        //                                 continue;
+        //                             } else {
+        //                                 break;
+        //                                 }
+        //                         } else {
+        //                             break;
+        //                             }
+        //                     } else {
+        //                         break;
+        //                         }
+        //                 } else {
+        //                     break;
+        //                     }
+        //             } else {
+        //                 break;
+        //                 }
+        //         } else {
+        //             break;
+        //             }
+        //     } else {
+        //         break;
+        //         }
+        // } 
+
+        // ----------------------Задание 9    
+        // Вывести таблицу умножения для всех чисел от 2 до 9. Каждое число необходимо умножить на числа от 1 до 10.
+        
+        var answer;
+        var line = [];
+        var table = [];
+        
+       
+        for (i = 2; i < 10; i++) {
+            for (j = 1; j < 11; j++) {
+                answer = i * j;
+                line.push(answer);
+                
+                for  (k = 0; k < 10; k++) {
+                    
+                    table.push(line);
+                    console.log(answer);
                 }
             }
         }
+        document.write(table);
+        
+//         var table = '';
 
-        
-        
-        
-          
+// for (var i = 1; i <= 10; i++) {
+//     for (var j = 2; j <= 9; j++) {
+//         table += i*j + '          '; 
+//     }
+//     table += '\n';
+// }
 
+// alert(table);
+
+       
+        
+     
+        
         
     </script> 
 <body>
