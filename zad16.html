@@ -451,36 +451,14 @@
         // ----------------------Задание 9    
         // Вывести таблицу умножения для всех чисел от 2 до 9. Каждое число необходимо умножить на числа от 1 до 10.
         
-        var answer;
-        var line = [];
-        var table = [];
-        
-       
-        for (i = 2; i < 10; i++) {
-            for (j = 1; j < 11; j++) {
+       var answer;
+for (i = 2; i < 10; i++) {
+        for (j = 1; j < 11; j++) {
                 answer = i * j;
-                line.push(answer);
-                
-                for  (k = 0; k < 10; k++) {
-                    
-                    table.push(line);
-                    console.log(answer);
-                }
-            }
+                document.write(answer + " | ");
         }
-        document.write(table);
-        
-//         var table = '';
-
-// for (var i = 1; i <= 10; i++) {
-//     for (var j = 2; j <= 9; j++) {
-//         table += i*j + '          '; 
-//     }
-//     table += '\n';
-// }
-
-// alert(table);
-
+        document.write("<br>");
+}
        
         
      
