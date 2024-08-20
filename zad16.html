@@ -459,7 +459,20 @@ for (i = 2; i < 10; i++) {
         }
         document.write("<br>");
 }
-       
+       //-------------------------------- 2 вариант
+        var answer;
+line = [];
+for (i = 2; i < 10; i++) {
+        for (j = 1; j < 11; j++) {
+                answer = i * j;
+                line.push(answer);
+               
+        }
+        document.write(line);
+        document.write('<br>');
+        line=[];
+}
+
         
      
         
