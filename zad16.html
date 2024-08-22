@@ -450,29 +450,113 @@
 
         // ----------------------Задание 9    
         // Вывести таблицу умножения для всех чисел от 2 до 9. Каждое число необходимо умножить на числа от 1 до 10.
+        // var answer;
+        // var line = [];
+        // for (i = 2; i < 10; i++) {
+        //     for (j = 1; j < 11; j++) {
+        //         answer = i * j;
+        //         line.push(answer);
+        //     } 
+        //     document.write(line);  
+        //     document.write("<br>");
+        //     line = [];
+        // }
+        // ----------------------Задание 10  
+        // // Игра «Угадай число». Предложить пользователю загадать число от 0 до 100 и отгадать его следующим способом: каждую итерацию цикла делите диапазон чисел пополам, записываете результат в N и спрашиваете у пользователя «Ваше число > N, < N или == N?». В зависимости от того, что указал пользователь, уменьшаете диапазон. Начальный диапазон от 0 до 100, поделили пополам и получили 50. Если пользователь указал, что его число > 50, то изменили диапазон на от 51 до 100. И так до тех пор, пока пользователь не выберет == N.
         
-       var answer;
-for (i = 2; i < 10; i++) {
-        for (j = 1; j < 11; j++) {
-                answer = i * j;
-                document.write(answer + " | ");
+        if (confirm("загадай целое число от 0 до 100")) {
+            var arr = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40];
+            var N = 0;
+            for(i = 0; i <= arr.length; i++) {
+                N  =  arr[Math.floor(arr.length / 2)];
+                var symbol = prompt("Ваше число > " + N + " или < " + N + " или = " + N + " ?");
+                if(symbol == ">") {
+                    for(j = 1; j < arr.length; j++) {
+                        arr[j-1] = arr[Math.floor(arr.length / 2)+j];
+                        arr[j] = arr[j-1];
+                    }
+                    arr.length = Math.floor(arr.length / 2);
+                    alert(arr + "---" + arr.length);
+                }  else if(symbol == "<") {
+                    arr.length = Math.floor(arr.length / 2);
+                    alert(arr + "---" + arr.length);
+                } else {
+                    alert("Я угодал!!!=)")
+                    break;
+                }
+                if(arr.length == 1) {
+                    N = arr;
+                    var symbol = prompt("Ваше число = " + N + " ?");
+                    if(symbol == "=") {
+                        alert("Я угодал!!!=)")
+                        break;
+                    }
+                }
+                if(arr.length == 2) {
+                    N = arr[Math.floor(arr.length / 2)-1];
+                    var symbol = prompt("Ваше число > " + N + " или < " + N + " или = " + N + " ?");
+                    if(symbol == ">") {
+                    N = arr[1]
+                    var symbol = prompt("Ваше число = " + N + " ?");
+                    if(symbol == "=") {
+                        alert("Я угодал!!!=)")
+                        break;
+                    }
+                    } else if(symbol == "=") {
+                        alert("Я угодал!!!=)")
+                        break;
+                    }
+                }   
+            } 
         }
-        document.write("<br>");
-}
-       //-------------------------------- 2 вариант
-        var answer;
-line = [];
-for (i = 2; i < 10; i++) {
-        for (j = 1; j < 11; j++) {
-                answer = i * j;
-                line.push(answer);
-               
-        }
-        document.write(line);
-        document.write('<br>');
-        line=[];
-}
 
+
+        
+
+        //         N = Math.floor(49/2);
+        // alert(N)
+
+        // N = 5;
+        // var arr = [0,1,2,3,4,5,6,7,8,9,10]
+        // for(j = 1; j < (N+1); j++) {
+        //     arr[j-1] = arr[N+j];
+        //     arr[j] = arr[j-1];
+        // }
+        // arr.length = arr.length-N-1;
+        // alert(arr);
+        
+        
+        
+        // // var centr = 0;
+        // // centr = Math.round(arr.length / 2);
+        // // N = arr[centr]
+        // arr.length = arr.length-6-1;
+        // // alert(arr);
+        // var arr = [0,1,2,3,4,5,6,7,8,9,10];
+        // arr.length = arr[Math.round(arr.length / 2)];
+        // alert(arr)
+
+              // var min = 0;    
+        // var max = 100;
+        // if (confirm("загадай целое число от 0 до 100")) {
+        //     for(i = min; i <= max; i++) {
+        //         N = max / 2
+        //         var symbol = prompt("Ваше число > " + N + " или < " + N + " или = " + N + " ?");
+        //         if(symbol == ">") {
+        //             min = N + 1;
+
+        //         }  else if(symbol == "<") {
+
+        //         } else {
+        //             alert("Я угодал!!!=)")
+        //             break;
+        //     }
+        //     }
+        // } 
+        
+        
+        
+     
         
      
         
