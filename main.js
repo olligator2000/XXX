@@ -620,3 +620,40 @@ const alex = new Human('Alex', 'Petrov', '35');
 
 oleg.display_info();
 alex.display_info();
+//----------------------------------------------------
+// class student {
+//     constructor(name, age, srball) {
+//         this.name = name;
+//         this.age = age;
+//         this.srball = srball;
+//     }
+
+//     display_info() {
+//     console.log(`Name: ${this.name}, Age: ${this.age}, Sredniy_Ball: ${this.srball}`);
+//     }
+
+//     zachet() {
+//         if (this.srball >= 4) {
+//             console.log('Студент сдал');
+//         } else {
+//             console.log('Студент не сдал');
+//         }
+//     }
+// }
+// const petrov = new student('petrov', '17', 4);
+// const ivanov = new student('ivanov', '16', 3);
+// petrov.display_info();
+// petrov.zachet();
+// ivanov.display_info();
+// ivanov.zachet();
+
+class Teacher extends Human {
+    constructor(name, surname, age, subjects = []) {
+        super(name, surname, age);
+        this.subjects = subjects;
+    }
+    showSubjects() {
+        console.log(`Subjects: ${this.subjects}`);
+    }
+}
+//----------------------------------------------------
