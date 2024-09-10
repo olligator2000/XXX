@@ -605,21 +605,21 @@
 
 
 
-class Human {
-        constructor(name, surname, age) {
-                this.name = name;
-                this.surname = surname;
-                this.age = age;
-        }
-        display_info() {
-            console.log(`Name: ${this.name}, Surname: ${this.surname}, Age: ${this.age}`);
-        }
-}
-const oleg = new Human('Oleg', 'Ivanov', '40');
-const alex = new Human('Alex', 'Petrov', '35');
+// class Human {
+//         constructor(name, surname, age) {
+//                 this.name = name;
+//                 this.surname = surname;
+//                 this.age = age;
+//         }
+//         display_info() {
+//             console.log(`Name: ${this.name}, Surname: ${this.surname}, Age: ${this.age}`);
+//         }
+// }
+// const oleg = new Human('Oleg', 'Ivanov', '40');
+// const alex = new Human('Alex', 'Petrov', '35');
 
-oleg.display_info();
-alex.display_info();
+// oleg.display_info();
+// alex.display_info();
 //----------------------------------------------------
 // class student {
 //     constructor(name, age, srball) {
@@ -647,13 +647,172 @@ alex.display_info();
 // ivanov.display_info();
 // ivanov.zachet();
 
-class Teacher extends Human {
-    constructor(name, surname, age, subjects = []) {
-        super(name, surname, age);
-        this.subjects = subjects;
-    }
-    showSubjects() {
-        console.log(`Subjects: ${this.subjects}`);
-    }
-}
-//----------------------------------------------------
+// class Teacher extends Human {
+//     constructor(name, surname, age, subjects = []) {
+//         super(name, surname, age);
+//         this.subjects = subjects;
+//     }
+//     showSubjects() {
+//         console.log(`Subjects: ${this.subjects}`);
+//     }
+// }
+//----------------------------------------------------Задача 1: Простая конвертация объекта в JSON
+// const student = {
+//     name: "Oleg",
+//     age: 21,
+//     city: "Ryazan"
+// }
+// const student1 = JSON.stringify(student);
+// console.log(student1);
+//----------------------------------------------------Задача 2: Обратная конвертация JSON в объект
+// const student1 = '{"name":"Alice","age":30,"city":"London"}'
+// const student = JSON.parse(student1);
+// console.log(student.name);
+//----------------------------------------------------Задача 3: Работа с вложенными объектами
+// const users = {
+//     name: "Oleg",
+//     adress: {
+//         street: "Gagarina",
+//         city: "Ryazan", 
+//         country: "Russia"
+//     }
+// }
+// const users1 = JSON.stringify(users);
+// const user_new = JSON.parse(users1)
+// console.log(user_new.adress.country);
+//----------------------------------------------------Задача 4: Массив объектов
+// var book = [
+//     {
+//         name: "Мастер и Маргаритра",
+//         author: "Михаил Булгаков",
+//         year: 1940
+//     },
+//     {
+//         name: "Сказки про кота",
+//         author: "Пушкин",
+//         year: 1935
+//     },
+//     {
+//         name: "Стихи",
+//         author: "Есенин",
+//         year: 1845
+//     }
+// ]
+// const books = JSON.stringify(book);
+// console.log(books);
+//----------------------------------------------------Задача 5: Обработка строк с JSON
+// const student1 = '{"name":"Alice","age":30,"city":"London"}'
+// try {
+//     const student = JSON.parse(student1);
+//     console.log(student.name);
+// } catch (error) {
+//     console.log(error);
+// }
+//----------------------------------------------------Задача 6: Добавление поля в объект после парсинга JSON
+// Создайте объект, описывающий продукт. Преобразуйте объект в JSON-строку и обратно. После парсинга добавьте новое поле category и выведите обновленный объект
+// const car = {
+//     model: "Vesta",
+//     age: 2018,
+//     color: "Red"
+// }
+// const car_json = JSON.stringify(car);
+// const car_json_out = JSON.parse(car_json);
+// car_json_out.category = "Taxi";
+// console.log(car_json_out);
+//----------------------------------------------------Задача 7: Удаление поля из объекта после парсинга. Создайте объект с информацией о студенте (имя, возраст, курс). Преобразуйте объект в JSON и обратно. Удалите поле age из объекта и выведите оставшиеся данные
+// const student = {
+//     name: "Oleg",
+//     age: 23,
+//     course: "Piton"
+// }
+// const student_json = JSON.stringify(student);
+// console.log(student_json);
+// const student_json_out = JSON.parse(student_json);
+// console.log(student_json_out);
+// delete student_json_out.age;
+// console.log(student_json_out);
+//----------------------------------------------------Задача 8: Фильтрация объектов вручную. Создайте массив объектов, где каждый объект представляет собой пользователя с полями name, age, и isActive. Напишите функцию, которая фильтрует активных пользователей вручную (без использования методов массивов) и возвращает новый массив с их именами.
+// var student = [
+//     {
+//         name: "Alex",
+//         age: 21,
+//         isActive: true
+//     },
+//     {
+//         name: "Oleg",
+//         age: 22,
+//         isActive: true
+//     },
+//     {
+//         name: "Ben",
+//         age: 23,
+//         isActive: false
+//     }
+// ]
+// function student_filtr() {
+//     student_isActive = [];
+//     for (let i = 0; i < student.length; i++) {
+//         if (student[i].isActive == true) {
+//             student_isActive.push(student[i].name);
+//         }
+//     }
+//     return student_isActive;
+// }
+// console.log(student_filtr(student));
+
+//----------------------------------------------------Задача 9: Подсчет суммы значений по критерию Создайте массив объектов, где каждый объект представляет продукт с полями name, price, и category. Напишите функцию, которая считает общую стоимость продуктов в категории "Electronics".
+// var goods = [
+//         {
+//             name: "Banans",
+//             price: 100,
+//             category: "Fruct"
+//         },
+//         {
+//             name: "Apple",
+//             price: 90,
+//             category: "Fruct"
+//         },
+//         {
+//             name: "Brokol",
+//             price: 50,
+//             category: "vegetable"
+//         }
+//     ]
+//     function sum_price() {
+//     let sum = 0;
+//     for (let i = 0; i < goods.length; i++) {
+//        sum += goods[i].price;
+//     }
+//     return sum;
+// }
+// console.log(sum_price(goods));
+
+//----------------------------------------------------Задача 10: Модификация данных в массиве объектов
+// Создайте массив объектов, представляющий пользователей с полями name, age, и subscribed. Напишите функцию, которая обновляет поле subscribed для всех пользователей старше 25 лет на true.
+// var student = [
+//         {
+//             name: "Alex",
+//             age: 21,
+//             subscribed: true
+//         },
+//         {
+//             name: "Oleg",
+//             age: 22,
+//             subscribed: true
+//         },
+//         {
+//             name: "Ben",
+//             age: 26,
+//             subscribed: false
+//         }
+//     ]
+// console.log(student);
+// function new_subscribed() {
+//     for (let i = 0; i < student.length; i++) {
+//         if (student[i].age > 25) {
+//             student[i].subscribed = true;
+//         }
+//     }
+//     return student;
+// }
+// console.log(new_subscribed(student));
