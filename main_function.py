@@ -99,10 +99,40 @@
 #     return price - price * proc1 / 100
 # print(f"Стоимость товара с учетом налога равна {calculate_total_price(100, proc1=10)}")
 
-# ############################### 8 Напишите функцию generate_password, которая принимает длину
+################################ 8 Напишите функцию generate_password, которая принимает длину
 # пароля в качестве параметра со значением по умолчанию и возвращает случайно сгенерированный пароль указанной длины
 
 # import random
 # def generate_password(lengs="Unknown"):
 #     return [random.randint(0, 10) for i in range(int(lengs))]
 # print(generate_password(lengs="8"))
+
+################################ 9 Напишите функцию, которая отображает на экран
+# форматированный текст, указанный ниже:
+# “Don't let the noise of others' opinions
+# drown out your own inner voice.”
+# Steve Jobs
+
+# def jobs():
+#     print("Don't let the noise of others opinions \n"
+#             "drown out your own inner voice.\n"
+#             "Steve Jobs")
+# jobs()
+
+################################ 10 Напишите функцию, которая принимает два числа
+# в качестве параметра и отображает все нечетные числа между ними.
+
+# def numbers(a, b):
+#     nums = []
+#     for i in range(a, b):
+#         if i % 2 == 1:
+#             nums.append(i)
+#     return nums
+# print(numbers(-10,11))
+
+################################ 11 Напишите функцию, которая отображает горизонтальную или вертикальную линию из некоторого символа.
+# Функция принимает в качестве параметра: длину линии, направление, символ
+def lines(dlina, napravlenie, symbol):
+    for i in range(dlina):
+        i += symbol
+    if
