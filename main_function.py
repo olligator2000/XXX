@@ -132,7 +132,11 @@
 
 ################################ 11 Напишите функцию, которая отображает горизонтальную или вертикальную линию из некоторого символа.
 # Функция принимает в качестве параметра: длину линии, направление, символ
-def lines(dlina, napravlenie, symbol):
-    for i in range(dlina):
-        i += symbol
-    if
+# def lines(dlina, napravlenie, symbol):
+#     s = ""
+#     if napravlenie == "-":
+#         print(symbol*dlina)
+#     if napravlenie == "|":
+#         for i in range(dlina):
+#             print(symbol)
+# lines(dlina=5, napravlenie="-", symbol="*")
