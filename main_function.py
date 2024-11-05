@@ -261,19 +261,19 @@
 
 ############################################ Напишите функцию, определяющую количество простых чисел в списке целых. Список передаётся в качестве
 # параметра.Полученныйрезультат возвращаетсяизфункции.
-s = [i for i in range(0, 100)]
-def prosto(list1):
-    d = []
-    for i in list1:
-        if i < 2:
-            break
-        else:
-            if i % 2 == 0:
-                break
-    else:
-        d.append(i)
-    return d
-print(prosto(s))
+# s = [i for i in range(0, 100)]
+# def prosto(list1):
+#     d = []
+#     for i in list1:
+#         if i < 2:
+#             return False
+#         else:
+#             if i % 2 == 0:
+#                 return False
+#     else:
+#         d.append(i)
+#     return d
+# print(prosto(s))
 
 ############################################ Напишите функцию, удаляющую из списка целых
 # некоторое заданное число. Из функции нужно вернуть количество удаленных элементов
@@ -306,3 +306,180 @@ print(prosto(s))
 #     return s
 # print(stepen([1, 2, 3], 2))
 
+
+
+#********************************************************************************************************************#
+############################################ ПОЗИЦИОННЫЕ АРГУМЕНТЫ
+#   *args одна звездочка, тип данных КОРТЕЖ позволят передавать произвольное количество позиционных аргументов,ообрабатывается как кортеж
+# def sum_numbers(*numbers):
+#     s = 0
+#     for i in numbers:
+#         s += i
+#     print(type(numbers))
+#     return s
+# print(sum_numbers(5, 6, 3, 6, 1, 3))
+
+############################################ ИМЕНОВАННЫЕ  АРГУМЕНТЫ
+#     **kwargs   две звездочки, тип данных СЛОВАРЬ
+#
+# def print_info(**person):
+#     print(type(person))
+#     for key, value in person.items():   # Берем все значение person
+#         print(f'{key}: {value}')
+# print(print_info(name="Alex", age=25, city="Moscow"))
+
+############################################ ПОЗИЦИОННЫЕ И ИМЕНОВАННЫЕ  АРГУМЕНТЫ
+#Сначала пишут все позиционные потом именованные
+#
+# def print_info(*info, **person):
+#     print(type(info))
+#     print(type(person))
+#     for j in info:
+#         print(j)
+#     for key, value in person.items():   # Берем все значение person
+#         print(f'{key}: {value}')
+# print_info("Hello", "World", name="Alex", age=25, city="Moscow")
+
+# КОМБО!!!! ПОЗИЦИОННЫЕ -> ИМЕНОВАННЫЕ -> ПО УМОЛЧАНИЮ -> ПРОИЗВОЛЬНЫЕ ПОЗИЦИОННЫЕ -> ПРОИЗВОЛЬНЫЕ ИМЕНОВАННЫЕ АРГУМЕНТЫ
+#***********************************************************************************************************************
+# ФУНКЦИЯ УПАКОВКИ ПОЗИЦИОНННЫХ АРГУМЕНТОВ
+# def info(*test):
+#     for i in test:
+#         print(i)
+# info("Hello", "World")
+
+# ФУНКЦИЯ РАСПАКОВКИ ПОЗИЦИОНННЫХ АРГУМЕНТОВ
+# words = ["Hello", "World"]
+# def info_2(word_1, word_2):
+#     print(word_1)
+#     print(word_2)
+# info_2(*words)
+
+##################
+
+# list_1 = [100, 2]
+# def way(speed, time):
+#     return speed * time
+# print(way(*list_1))
+
+##################
+#
+# def max_of_4(*numbers):
+#     print(max(numbers))
+# max_of_4(4, 10, -5, 8)
+
+################## 1 Задачи на args (позиционные аргументы)
+# Напишите функцию sum_numbers, которая принимает произвольное
+# # количество целых чисел в качестве аргументов и возвращает их сумму
+# def sum_numbers(*numbers):
+#     s = 0
+#     for i in numbers:
+#         s += i
+#     return s
+# print(sum_numbers(1, 2, 3))
+
+##################
+# Создайте функцию max_value, которая принимает произвольное
+# количество чисел и возвращает наибольшее из них
+# def max_value(*maxi):
+#     return max(maxi)
+# print(max_value(-2, 3, 10, 2))
+
+##################
+#  Реализуйте функцию merge_lists, которая принимает произвольное
+# количество списков и возвращает один список, содержащий все элементы из
+# всех переданных списков
+# def merge_lists(*texts):
+#     s = []
+#     for i in texts:
+#         s.extend(i)
+#     return s
+# print(merge_lists(['f', 'g', 'h'], ['i', 'k', 'g', 'b'], ['t', 'a', 'x', 'g', 'm'], ['2', 'g', '1']))
+
+################## 2. Задачи на kwargs (именованные аргументы):
+# a) Напишите функцию print_info, которая принимает именованные
+# аргументы (имя, возраст, город) и выводит информацию о человеке.
+# def print_info(**info):
+#     for key, value in info.items():
+#         print(f'{key}: {value}')
+#
+# print_info(name="Oleg", age=40, city="Ryazan")
+
+# b) Реализуйте функцию create_dict, которая принимает произвольное
+# количество именованных аргументов и возвращает словарь, содержащий
+# переданные аргументы.
+
+# def create_dict(**info):
+#     return info
+# print(create_dict(name="Oleg", age=40, city="Ryazan"))
+
+################## 3. Задачи на args и kwargs вместе:
+# Создайте функцию print_info_extended, которая принимает имя человека
+# и произвольное количество именованных аргументов (любые дополнительные
+# данные) и выводит информацию о человеке, включая переданные
+# дополнительные данные
+# def print_info_extended(name_1, **names):
+#     print(name_1)
+#     for key, value in names.items():
+#         print(f'{key}: {value}')
+# print_info_extended("Oleg", age=40, city="Ryazan", surname="Lukashov", work="Derevnya")
+
+################## 4. Напишите функцию sum_and_max_of_numbers, которая принимает
+# произвольное количество чисел в качестве аргументов и возвращает их сумму
+# и наибольшее из них.
+
+# def sum_and_max_of_numbers(*numbers):
+#     s = sum(numbers)
+#     maxi = max(numbers)
+#     return s, maxi
+# print(sum_and_max_of_numbers(5, 6, 8, 1, 3, 9))
+
+##################5. Напишите функцию average, которая принимает произвольное
+#количество чисел в качестве аргументов и возвращает их среднее значение
+
+# def sum_and_max_of_numbers(*numbers):
+#     return sum(numbers) / len(numbers)
+# print(sum_and_max_of_numbers(1, 2))
+
+##################7. Напишите функцию contains_element, которая принимает число для
+# поиска и произвольное количество элементов в качестве аргументов и
+# возвращает True, если это число есть в списке переданных элементов, и False
+# в противном случае.
+
+# def contains_element(num_1, *numbers):
+#     if num_1 in numbers:
+#         return True
+#     else:
+#         return False
+# print(contains_element(2, 3, 2, 5, 6, 7, 8))
+
+##################9. Напишите функцию remove_duplicates, которая принимает
+# произвольное количество списков и возвращает список, содержащий
+# уникальные элементы из всех переданных списков
+# def remove_duplicates(*texts):
+#     s = []
+#     for i in texts:
+#         s.extend(i)
+#     u = []
+#     for j in s:
+#         if j not in u:
+#             u.append(j)
+#     return u
+#
+# print(remove_duplicates(['f', 'g', 'h'], ['i', 'f', 'g', 'b'], ['t', 'a', 'x', 'f', 'm'], ['2', 'g', '1']))
+
+##################10. Напишите функцию remove_element, которая принимает произвольное
+# количество списков и элемент, который нужно удалить из них. Функция
+# должна вернуть список, в котором удалены все указанные элементы
+def remove_element(symbol, *texts):
+    s = []
+    for i in texts:
+        s.extend(i)
+    s_copy = s.copy()
+    for j in s:
+        if symbol == j:
+            s_copy.remove(j)
+        s_copy = s
+    return s
+
+print(remove_element('g', ['f', 'g', 'h'], ['i', 'f', 'g', 'b'], ['t', 'a', 'x', 'f', 'm'], ['2', 'g', '1']))
