@@ -471,15 +471,152 @@
 ##################10. Напишите функцию remove_element, которая принимает произвольное
 # количество списков и элемент, который нужно удалить из них. Функция
 # должна вернуть список, в котором удалены все указанные элементы
-def remove_element(symbol, *texts):
-    s = []
-    for i in texts:
-        s.extend(i)
-    s_copy = s.copy()
-    for j in s:
-        if symbol == j:
-            s_copy.remove(j)
-        s_copy = s
-    return s
+# def remove_element(symbol, *texts):
+#     s = []
+#     for i in texts:
+#         s.extend(i)
+#     s_copy = s.copy()
+#     for j in s:
+#         if symbol == j:
+#             s_copy.remove(j)
+#         s_copy = s
+#     return s
+#
+# print(remove_element('g', ['f', 'g', 'h'], ['i', 'f', 'g', 'b'], ['t', 'a', 'x', 'f', 'm'], ['2', 'g', '1']))
 
-print(remove_element('g', ['f', 'g', 'h'], ['i', 'f', 'g', 'b'], ['t', 'a', 'x', 'f', 'm'], ['2', 'g', '1']))
+#****************************************************************************************************************
+#****************************************************************************************************************
+#****************************************************************************************************************
+
+########### НАХОЖДЕНИЕ ФАКОРИАЛА
+# def factorial(n):
+#
+#     if n == 0 or n == 1:
+#         return 1     #Базовый случай
+#     else:
+#         return n * factorial(n - 1)     #Рекурсивный случай
+#
+#
+# print(factorial(9))
+
+########### НАХОЖДЕНИЕ ЧИСЛА ФИББОНАЧИ
+
+# s = []
+#
+#
+# def fibonacchi(n):
+#
+#     if n <= 1:
+#         return n
+#     else:
+#         return fibonacchi(n - 1) + fibonacchi(n - 2)
+#
+# for i in range(0, 30):
+#     s.append(fibonacchi(i))
+#
+# print(s)
+
+
+########### НАХОЖДЕНИЕ сумму цифр числа
+
+# def sum_digits(n):
+#
+#     if n < 10:
+#         return n
+#     else:
+#         return n % 10 + sum_digits(n // 10)
+#
+#
+# print(sum_digits(200))
+
+########### НАписать рекурсивную фукнцию степени нахождения числа
+
+# def power(base, exponent):           # Специальная функция возведения в степень
+#
+#     if exponent == 0:
+#         return 1
+#     elif exponent > 0:
+#         return base * power(base, exponent - 1)
+#     else:
+#         return 1 / power(base, -exponent)
+#
+#
+# print(power(2, -3))
+
+########### НАписать рекурсивную фукнцию нахождения суммы чисел
+
+# def sum_range(a, b):
+#
+#     if a == b:
+#         return a
+#     elif a < b:
+#         return a + sum_range(a + 1, b)
+#     else:
+#         return a + sum_range(a - 1, b)
+#
+#
+# print(sum_range(5, 1))
+
+#################################
+#################################
+#################################
+# import math
+# from math import pi, cos, sin
+# import math as m    #math переименовываем в m
+# from math import *    #Импортируем все методы
+
+################################# 1
+# Округление числа вверх и вниз: Напишите программу, которая запрашивает у пользователя дробное число и
+# округляет его вверх и вниз до ближайших целых чисел. Для этого используйте функции ceil и floor из модуля math
+# соответственно.
+# import math
+# num_1 = float(input("Введите дробное число: "))
+# print(math.floor(num_1), math.ceil(num_1))
+
+################################# 2
+# Напишите программу, которая принимает на вход предложение и случайным образом перемешивает слова в нем.
+# import random
+# text = input("Введите текст: ").split(" ")
+# random.shuffle(text)
+# s = " ".join(text)
+#
+# print(s)
+
+################################# 3
+# Напишите программу, которая генерирует случайный лотерейный билет. В лотерейном билете должно
+# быть 6 уникальных случайных чисел от 1 до 49
+# import random
+# i = 1
+# while i < 5:
+#     s = random.randrange(1, 49, 1)
+#     i += 1
+# print(s)
+
+################################# 4
+# Напишите программу, которая генерирует случайный пароль заданной длины для пользователя. Пароль должен
+# состоять из символов верхнего и нижнего регистра, а также цифр
+import random
+import string
+
+list_num = [i for i in range(1, 11)]
+i = 1
+s = "asd"
+while i < 5:
+    text_1 = random.sample(string.ascii_letters, 4)
+
+    num_1 = random.sample(list_num, 4)
+    s = []
+    for j in num_1:
+        if j % 2 == 0:
+            s.append(j)
+        for k in text_1:
+            if k % 2 == 1:
+                s.append(k)
+    i += 1
+
+
+print(s)
+
+
+
+
