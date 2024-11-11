@@ -597,25 +597,12 @@
 # состоять из символов верхнего и нижнего регистра, а также цифр
 import random
 import string
+text_1 = random.sample(string.ascii_letters, 4)
+num_1 = random.sample(string.digits, 4)
+a = text_1 + num_1
+random.shuffle(a)
+print("".join(a))
 
-list_num = [i for i in range(1, 11)]
-i = 1
-s = "asd"
-while i < 5:
-    text_1 = random.sample(string.ascii_letters, 4)
-
-    num_1 = random.sample(list_num, 4)
-    s = []
-    for j in num_1:
-        if j % 2 == 0:
-            s.append(j)
-        for k in text_1:
-            if k % 2 == 1:
-                s.append(k)
-    i += 1
-
-
-print(s)
 
 
 
