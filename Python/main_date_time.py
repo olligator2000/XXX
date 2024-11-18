@@ -104,12 +104,16 @@
 
 ######################################################## 3
 # Напишите программу, которая определяет количество дней до конца текущего месяца
-from datetime import datetime
-dt_string = input("Введите дату в формате ДД : ")
-dt = datetime.strptime(dt_string, "%Y-%m-%d")
-today = datetime.month()
-for i in today:
-day = today.month - dt
+from datetime import datetime, date
+dt_string = input("Введите дату в формате ДД-ММ-ГГГГ : ")
+dt = datetime.strptime(dt_string, "%d-%m-%Y")
+
+if dt.month == 12:
+    dt_2 = datetime(day=1, month=dt.month - 11, year=dt.year + 1)
+else:
+    dt_2 = datetime(day=1, month=dt.month + 1, year=dt.year)
+
+print(dt_2 - dt)
 
 ######################################################## 4
 # Напишите программу, которая определяет возраст человека по его дате рождения
