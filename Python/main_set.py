@@ -120,7 +120,7 @@
 def common_elements_multiple_lists(*list_x):
     x = set(list_x[0])
     for i in list_x[1:]:
-        x = x & set(list_x)
+        x = x & set(i)
 
     return x
 
