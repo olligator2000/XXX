@@ -250,17 +250,69 @@
 # print(get_value(words, key_to_chek))
 #
 
+###################### 2ой метод ALL
+# def get_value(dictionary, keys):
+#     return all(k in dictionary for k in keys) #Проверяет что все элементы в последовательности True
+#
+# words = {
+#     "a": 1,
+#     "b": 2,
+#     "c": 2,
+#     "d": 2,
+#
+# }
+#
+# key_to_chek = ["a", "d", "w"]
+#
+# print(get_value(words, key_to_chek))
 
-def get_value(dictionary, keys):
-    return all(k in dictionary for k in keys)
+################################################ 5
+# Напишите функцию, которая принимает список элементов и возвращает словарь, где ключами являются уникальные элементы
+# списка, а значениями - количество повторений каждого элемента.
 
-words = {
-    "a": 1,
-    "b": 2,
-    "c": 2,
-    "d": 2,
-}
+# list_values = [1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 5, 5]
+#
+# def count_elements(lst):
+#     counts = {}
+#     for i in lst:
+#         # counts[i] = lst.get(i, 0) + 1
+#         counts[i] = lst.count(i)
+#     return counts
+#
+# print(count_elements(list_values))
 
-key_to_chek = ["a", "d", "w"]
+################################################ 6
+# Напишите функцию, которая принимает словарь и значение, а затем возвращает список ключей, соответствующих этому значению.
 
-print(get_value(words, key_to_chek))
+# dict_1 = {
+#     "a": 1,
+#     "b": 2,
+#     "c": 3,
+#     "d": 4,
+#     "e": 3,
+#     "f": 2,
+# }
+#
+# value = 2
+#
+# def found_same_values(dictionaty, val):
+#     return [key for key, value in dictionaty.items() if val == value]
+#
+# print(found_same_values(dict_1, value))
+
+################################################ 8
+# Напишите функцию для обращения словаря, то есть создания нового словаря, где ключи и значения поменяны местами
+
+# dict_1 = {
+#     "a": 1,
+#     "b": 2,
+#     "c": 3,
+#     "d": 4,
+#     "e": 3,
+#     "f": 2,
+# }
+#
+# def found_same_values(dictionaty):
+#     return {value: key for key, value in dictionaty.items()}
+#
+# print(found_same_values(dict_1))
