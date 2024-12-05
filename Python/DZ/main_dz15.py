@@ -2,75 +2,112 @@
 # Создайте программу «Книжная коллекция». Нужно хранить информацию о книгах: автор, название книги,
 # жанр, год выпуска, количество страниц, издательство. Требуется реализовать возможность добавления, удаления,
 # поиска, замены данных. Используйте словарь для хранения информации.
-import dataclasses
 
+############################################### 1
+# Создайте программу «Книжная коллекция». Нужно хранить информацию о книгах: автор, название книги,
+# жанр, год выпуска, количество страниц, издательство. Требуется реализовать возможность добавления, удаления,
+# поиска, замены данных. Используйте словарь для хранения информации.
 
 def add_book(book):
-    author = input("Введите имя автора: ").lower()
-    name = input("Введите название книги: ").lower()
+    author = input("Введите имя автора: ").strip().lower()
+    name = input("Введите название книги: ").strip().lower()
+
+    if author in book and name in book[author]:
+        print(f'Такая книга: "{name}" с таким автором: "{author}" уже существует!')
+        return
+
+    genre = input("Введите жанр книги: ").strip().lower()
+    year = input("Введите год выпуска книги: ").strip().lower()
+    pages = input("Введите количество страниц: ").strip().lower()
+    publishing_house = input("Введите имя издательства: ").strip().lower()
+
     if author not in book:
-        genre = input("Введите жанр книги: ").lower()
-        year = input("Введите год выпуска книги: ").lower()
-        pages = input("Введите количество страниц: ").lower()
-        publishing_house = input("Введите имя издательства: ").lower()
-        if name not in author:
-            book[author] = {name: [genre, year, pages, publishing_house]}
-            print("*** Книга успешно добавлена! ***")
-    elif name not in book[author]:
-        genre = input("Введите жанр книги: ").lower()
-        year = input("Введите год выпуска книги: ").lower()
-        pages = input("Введите количество страниц: ").lower()
-        publishing_house = input("Введите имя издательства: ").lower()
-        book[author].update({name: [genre, year, pages, publishing_house]})
-        print("*** Книга успешно добавлена! ***")
-    else:
-        print(f'Такая книга: "{name}" с таким автором: "{author}" уже сущесвтует!!!')
+        book[author] = {}
+    book[author][name] = [genre, year, pages, publishing_house]
+    print("*** Книга успешно добавлена! ***\n")
 
 
 def del_book(book):
-    author = input("Введите имя автора: ").lower()
-    name = input("Введите название книги: ").lower()
-    if author not in book and name not in book:
-        print("*** Такой книги не существует! ***")
-    else:
+    if not book:
+        print("*** Коллекция пуста! ***\n")
+        return
+
+    author = input("Введите имя автора: ").strip().lower()
+    if author not in book:
+        print("*** Такого автора не существует! ***\n")
+        return
+
+    name = input("Введите название книги: ").strip().lower()
+    if name not in book[author]:
+        print("*** Такой книги не существует! ***\n")
+        return
+
+    del book[author][name]
+    print(f'Книга "{name}" автора "{author}" успешно удалена!\n')
+
+    if not book[author]:
         del book[author]
-        print("*** Книга успешно добавлена! ***")
 
 
 def get_book(book):
     if not book:
-        print("*** Коллекция пуста! ***")
+        print("*** Коллекция пуста! ***\n")
         return
-    author = input("Введите имя автора: ").lower()
-    name = input("Введите название книги: ").lower()
-    find_author = book.get(author, "Не сущесвтует! ")
-    find_book = find_author.get(name, "Не сущесвтует! ")
-    print(f'Автор: {find_author}, Название книги: {find_book}')
-    for name, details in find_author.items():
-        print(f'Жанр: {details[0].capitalize()} | Год: {details[1]} | '
-              f'Страниц: {details[2]} | Издательство: {details[3].capitalize()}')
-    print()
+
+    author = input("Введите имя автора: ").strip().lower()
+    if author not in book:
+        print("*** Такого автора не существует! ***\n")
+        return
+
+    name = input("Введите название книги: ").strip().lower()
+    if name not in book[author]:
+        print("*** Такой книги не существует! ***\n")
+        return
+
+    details = book[author][name]
+    print(f'Автор: "{author.capitalize()}"\n'
+          f'Название книги: "{name.capitalize()}" | Жанр: {details[0].capitalize()} | Год: {details[1]} | '
+          f'Страниц: {details[2]} | Издательство: {details[3].capitalize()}\n')
 
 
-# name = input("Введите имя баскетболиста: ")
-#     find_player = players.get(name, "Не сущесвтует! ")
-#     print(f"{name}: {find_player}")
-#
+def replace_book(book):
+    if not book:
+        print("*** Коллекция пуста! ***\n")
+        return
+
+    author = input("Введите имя автора: ").strip().lower()
+    if author not in book:
+        print("*** Такого автора не существует! ***\n")
+        return
+
+    name = input("Введите название книги: ").strip().lower()
+    if name not in book[author]:
+        print("*** Такой книги не существует! ***\n")
+        return
+
+    new_name = input("Введите новое название книги: ").strip().lower()
+    genre = input("Введите жанр книги: ").strip().lower()
+    year = input("Введите год выпуска книги: ").strip().lower()
+    pages = input("Введите количество страниц: ").strip().lower()
+    publishing_house = input("Введите имя издательства: ").strip().lower()
+
+    del book[author][name]
+    book[author][new_name] = [genre, year, pages, publishing_house]
+    print("*** Книга успешно изменена! ***\n")
+
 
 def show_all(book):
     if not book:
-        print("*** Коллекция пуста! ***")
+        print("*** Коллекция пуста! ***\n")
         return
+
     for author, books in book.items():
         print(f'Автор: {author.capitalize()}')
         for name, details in books.items():
-            print(f'  Название: "{name.capitalize()}" | Жанр: {details[0].capitalize()} | Год: {details[1]} | '
+            print(f'Название: "{name.capitalize()}" | Жанр: {details[0].capitalize()} | Год: {details[1]} | '
                   f'Страниц: {details[2]} | Издательство: {details[3].capitalize()}')
         print()
 
-
-def show_alls(book):
-    print(book)
 
 
 def main():
@@ -91,12 +128,14 @@ def main():
         elif answer == "3":
             get_book(collection_books)
         elif answer == "4":
-            show_alls(collection_books)
+            replace_book(collection_books)
         elif answer == "5":
             show_all(collection_books)
         elif answer == "0":
             pass
         else:
-            print("Неверные данные")
+            print("*** Неверные данные ***")
+            print()
 
 main()
+
