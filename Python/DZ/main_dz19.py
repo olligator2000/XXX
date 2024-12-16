@@ -121,34 +121,23 @@
 #
 # print(f"Слово {word} встречается {count_word} раз(а)")
 
-############################################## 6 НЕ ПОЛУЧИЛОСЬ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+############################################## 6
 # Дан текстовый файл. Найти и заменить в нем заданное слово. Что искать и на что заменять определяется
 # пользователем.
 
+# with open("file2.txt", "w", encoding="utf-8") as file:
+#     file.write("Привет Мир\n"
+#                "Здорова Мир\n"
+#                "Есть поесть\n"
+#                "Мир\n")
 # word = input("Введите искомое слово: ").lower()
 # word_new = input("Введите новое слово: ").lower()
-# x = []
-# with open("file1.txt", "w", encoding="utf-8") as file:
-#     file.write("Привет Мир!\n"
-#                "Здорова, мир!\n"
-#                "Есть, поесть?\n"
-#                "Мир")
 #
-# with open("file1.txt", "r", encoding="utf-8") as file:
-#     # line_long = file.read().splitlines()
-#     line_long = file.read()
-#     for i in line_long:
-#         for j in i:
-#             if word in i:
-#                 x = i.replace(word, word_new)
-#     print(x)
-#     # for i in line_long:
-#     #     s = i.lower().split(" ")
-#     #     for j in range(len(s)):
-#     #         for k in range(len(s[j])):
-#     #             if s[j][k] in "!?,.:;":
-#     #                 s[j] = s[j][:k] + '' + s[j][k+1:]        #Удаляем !?,.:;
-#     #         if word == s[j]:
-#     #             s = s[j].replace(s[j], f"{word_new}")        #Меняем слово
-#     #     print(s)
-
+# with open("file2.txt", "r", encoding="utf-8") as file, open("file3.txt", "w", encoding="utf-8") as file_new:
+#     for i in file:
+#         line = i.lower().replace(word, word_new)
+#         file_new.write(line)
+#
+# with open("file3.txt", "r", encoding="utf-8") as file, open("file2.txt", "w", encoding="utf-8") as file_old:
+#     line = file.read()
+#     file_old.write(line.lower())
