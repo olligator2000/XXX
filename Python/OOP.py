@@ -247,48 +247,235 @@ import datetime
 # Создайте класс "Библиотека", у которого есть приватные атрибуты
 # "количество книг" и "список книг". Реализуйте методы для добавления и
 # удаления книг из библиотеки, а также для вывода списка книг
+#
+# class Library:
+#
+#     def __init__(self):
+#         self.__count = 0
+#         self.__list_book = []
+#
+#     def info(self):
+#         print("Список книг:")
+#         for i in self.__list_book:
+#             print(f"{i}")
+#         print(f"Количество книг: {self.__count}")
+#         print()
+#
+#     @property
+#     def list_book_add(self):
+#         return self.__list_book
+#
+#     @list_book_add.setter
+#     def list_book_add(self, new_list_book):
+#         if type(new_list_book) == str:
+#             self.__list_book.append(new_list_book)
+#             self.__count += 1
+#         else:
+#             print("Неверное значение!")
+#
+#     @property
+#     def list_book_del(self):
+#         return self.__list_book
+#
+#     @list_book_del.setter
+#     def list_book_del(self, name_book):
+#         if type(name_book) == str:
+#             self.__list_book.remove(name_book)
+#             self.__count -= 1
+#         else:
+#             print("Неверное значение!")
+#
+#
+# book_1 = Library()
+# book_1.info()
+# book_1.list_book_add = "oleg"
+# book_1.info()
+# book_1.list_book_add = "dima"
+# book_1.info()
+# book_1.list_book_del = "oleg"
+# book_1.info()
 
-class Library:
+################################ НАСЛЕДОВАНИЕ
 
-    def __init__(self):
-        self.__count = 0
-        self.__list_book = []
+# class Phone:
+#
+#     # Инициализатор
+#     def __init__(self):
+#         self.is_on = False
+#
+#     # Включаем телефон
+#     def turn_on(self):
+#         self.is_on = True
+#
+#     # Если телефон включен, делаем звонок
+#     def call(self):
+#         if self.is_on:
+#             print('Making call...')
+#
+#
+# class MobilePhone(Phone):
+#
+#     # Добавляем новое свойство battery
+#     def __init__(self):
+#         super().__init__()
+#         self.battery = 0
+#
+#     # Заряжаем телефон на величину переданного значения
+#     def charge(self, num):
+#         self.battery = num
+#         print(f'Charging battery up to ... {self.battery}%')
+#
+# mobilePhone_1 = MobilePhone()
+# print(dir(mobilePhone_1))
+#
+# #ПРоверяем является ли класс потомком родителя
+# print(issubclass(MobilePhone, Phone))
+# #ПРоверяем является ли объект экземпляром класса
+# print(isinstance(mobilePhone_1, Phone))
 
-    def info(self):
-        for i in self.__list_book:
-            print(f"Список книг: {i}")
-        print(f"Количество книг: {self.__count}")
+#############################################
 
-    @property
-    def list_book_add(self):
-        return self.__list_book
+# class Vehicle:
+#     def __init__(self, brand, model):
+#         self.brand = brand
+#         self.model = model
+#
+#     def drive(self):
+#         print(f"{self.brand} {self.model} is driving...")
+#
+#
+# class Car(Vehicle):
+#     def __init__(self, brand, model, color, year, volume):
+#         super().__init__(brand, model)
+#         self.color = color
+#         self.year = year
+#         self.volume = volume
+#
+#     def reffil(self):
+#         print(f"{self.volume} reffiling")
+#
+# class Bike(Vehicle):
+#     def __init__(self, brand, model, price):
+#         super().__init__(brand, model)
+#         self.price = price
+#
+#     def ring(self):
+#         print("RING! RING!")
+#
+# vehicle_1 = Vehicle(brand="X", model="Y")
+# car_1 = Car(brand="LADA", model="VESTA", color="Red", year=2018, volume=1.6)
+# bike_1 = Bike(brand="Stels", model="x12", price=10000)
+#
+# print(vehicle_1.brand, vehicle_1.model)
+# print(car_1.brand, car_1.model, car_1.color, car_1.year, car_1.volume)
+# print(bike_1.brand, bike_1.model, bike_1.price)
+# car_1.drive()
+# car_1.reffil()
 
-    @list_book_add.setter
-    def list_book_add(self, new_list_book):
-        if type(new_list_book) == str:
-            self.__list_book.append(new_list_book)
-            self.__count += 1
-        else:
-            print("Неверное значение!")
 
-    @property
-    def list_book_del(self):
-        return self.__list_book
+#############################################
 
-    @list_book_del.setter
-    def list_book_del(self, name_book):
-        if type(name_book) == str:
-            self.__list_book.remove(name_book)
-            self.__count -= 1
-        else:
-            print("Неверное значение!")
+# class Vehicle:
+#     def __init__(self, brand, model):
+#         self.brand = brand
+#         self.model = model
+#
+#     def drive(self):
+#         print(f"{self.brand} {self.model} is driving...")
+#
+#
+# class Car(Vehicle):
+#     def __init__(self, brand, model, color, year, volume):
+#         super().__init__(brand, model)
+#         self.color = color
+#         self.year = year
+#         self.volume = volume
+#
+#     def reffil(self):
+#         print(f"{self.volume} reffiling")
+#
+# class LightCar(Car):
+#     def __init__(self, brand, model, color, year, volume, price):
+#         super().__init__(brand, model, color, year, volume)
+#         self.price = price
+#
+#     def ring(self):
+#         print("RING! RING!")
+#
+# vehicle_1 = Vehicle(brand="X", model="Y")
+# car_1 = Car(brand="LADA", model="VESTA", color="Red", year=2018, volume=1.6)
+# lc_1 = LightCar(brand="LADA", model="VESTA", color="Red", year=2018, volume=1.6, price=20000)
+#
+# print(vehicle_1.brand, vehicle_1.model)
+# print(car_1.brand, car_1.model, car_1.color, car_1.year, car_1.volume)
+# print(lc_1.brand, lc_1.model, lc_1.color, lc_1.year, lc_1.volume, lc_1.price)
 
+########################################### 1
+# Создайте класс Human, который будет содержать информацию о человеке. Спомощью механизма наследования, реализуйте класс
+# Builder (содержит информацию о строителе), класс Sailor (содержит информацию о моряке), класс Pilot (содержит
+# информацию о летчике). Каждый из классов должен содержать необходимые для работы методы
 
-book_1 = Library()
-book_1.info()
-book_1.list_book_add = "oleg"
-book_1.info()
-book_1.list_book_add = "dima"
-book_1.info()
-book_1.list_book_del = "oleg"
-book_1.info()
+# class Human:
+#     def __init__(self, gender, age):
+#         self.gender = gender
+#         self.age = age
+#
+#     def live(self):
+#         print(f"{self.gender} {self.age}  is living...")
+#
+# class Builder(Human):
+#     def __init__(self, gender, age, name, post, experience):
+#         super().__init__(gender, age)
+#         self.name = name
+#         self.post = post
+#         self.experience = experience
+#
+#     def build(self):
+#         print(f"{self.post} build...")
+#
+# class Sailor(Human):
+#     def __init__(self, gender, age, name, rank, experience):
+#         super().__init__(gender, age)
+#         self.name = name
+#         self.rank = rank
+#         self.experience = experience
+#
+#     def attire(self):
+#         print(f"{self.rank} wash floors...")
+#
+# class Pilot(Human):
+#     def __init__(self, gender, age, name, rank, flight_hours):
+#         super().__init__(gender, age)
+#         self.name = name
+#         self.rank = rank
+#         self.experience = flight_hours
+#
+#     def attire(self):
+#         print(f"{self.rank} controls the plane...")
+#
+# builder_1 = Builder(gender="Men", age=40, name="Oleg", post="Прораб", experience=15)
+# print(builder_1.gender, builder_1.age, builder_1.name, builder_1.post, builder_1.experience)
+#
+# sailor_1 = Sailor(gender="Men", age=40, name="Alex", rank="Юнга", experience=1)
+# print(sailor_1.gender, sailor_1.age, sailor_1.name, sailor_1.rank, sailor_1.experience)
+#
+# pilot_1 = Pilot(gender="Women", age=40, name="Olga", rank="Капитан", flight_hours=15000)
+# print(pilot_1.gender, pilot_1.age, pilot_1.name, pilot_1.rank, pilot_1.experience)
+#
+
+# Задание 2
+# Создайте класс Passport (паспорт), который будет
+# содержать паспортную информацию о гражданине заданной страны.
+# С помощью механизма наследования, реализуйте
+# класс ForeignPassport (загран.паспорт) производный от
+# Passport.
+# Напомним, что заграничный паспорт содержит помимо паспортных данных, также данные о визах, номер
+# заграничного паспорта.
+# Каждый из классов должен содержать необходимые
+# методы.
+#
+#
+# Задание 3
+# Создать базовый класс «Животное» и производные
+# классы «Тигр», «Крокодил», «Кенгуру». С помощью конструктора установить имя каждого животного и его характеристики. Создайте для каждого класса необходимые
+# методы и поля.
