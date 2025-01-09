@@ -479,3 +479,93 @@ import datetime
 # Создать базовый класс «Животное» и производные
 # классы «Тигр», «Крокодил», «Кенгуру». С помощью конструктора установить имя каждого животного и его характеристики. Создайте для каждого класса необходимые
 # методы и поля.
+
+
+
+#################################### ПОСЛЕДОВАТЕЛЬНОСТЬ
+
+# class A:
+#     def action(self):
+#         print("Action A")
+#
+# class B(A):
+#     def action(self):
+#         print("Action B")
+#
+# class C(A):
+#     def action(self):
+#         print("Action C")
+#
+# class D(B, C):
+#     pass
+#
+# d = D()
+# d.action()
+
+#################################### КОМПОЗИЦИЯ
+
+# class Engine:
+#     def start(self):
+#         print("Engine starts...")
+#
+#     def stop(self):
+#         print("Engine stops...")
+# class Car:
+#     def __init__(self):
+#         self.engine = Engine()
+#
+#     def drive(self):
+#         self.engine.start()
+#         print("Car is driving")
+#
+#     def stop(self):
+#         self.engine.stop()
+#         print("Car stoped")
+#
+# engine = Engine()
+# car = Car()
+# car.drive()
+# car.stop()
+
+####################################### 2
+# Компьютер и его компоненты
+# Ситуация: Компьютер состоит из процессора, оперативной памяти и
+# видеокарты. Каждый компонент — это отдельный класс.
+
+
+class CPU:
+    def __init__(self, brend, cores):
+        self.brand = brend
+        self.cores = cores
+
+    def info(self):
+        return f"CPU: {self.brand}, Cores: {self.cores}"
+
+class RAM:
+    def __init__(self, size):
+        self.size = size
+
+    def info(self):
+        return f"RAM: {self.size}Gb"
+
+class GPU:
+    def __init__(self, brend, memory):
+        self.brand = brend
+        self.memory = memory
+
+    def info(self):
+        return f"GPU: {self.brand} Memory: {self.memory}"
+
+class PC:
+    def __init__(self):
+        self.cpu = CPU("Intel", 5)
+        self.ram = RAM(16)
+        self.gpu = GPU("nVIDIA", 4)
+
+    def info_details(self):
+        return f"{self.cpu.info()} \n" \
+               f"{self.ram.info()} \n" \
+               f"{self.gpu.info()}"
+
+computer_1 = PC()
+print(computer_1.info_details())
