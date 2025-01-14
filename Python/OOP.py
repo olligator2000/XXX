@@ -533,39 +533,90 @@ import datetime
 # видеокарты. Каждый компонент — это отдельный класс.
 
 
-class CPU:
-    def __init__(self, brend, cores):
-        self.brand = brend
-        self.cores = cores
+# class CPU:
+#     def __init__(self, brend, cores):
+#         self.brand = brend
+#         self.cores = cores
+#
+#     def info(self):
+#         return f"CPU: {self.brand}, Cores: {self.cores}"
+#
+# class RAM:
+#     def __init__(self, size):
+#         self.size = size
+#
+#     def info(self):
+#         return f"RAM: {self.size}Gb"
+#
+# class GPU:
+#     def __init__(self, brend, memory):
+#         self.brand = brend
+#         self.memory = memory
+#
+#     def info(self):
+#         return f"GPU: {self.brand} Memory: {self.memory}"
+#
+# class PC:
+#     def __init__(self):
+#         self.cpu = CPU("Intel", 5)
+#         self.ram = RAM(16)
+#         self.gpu = GPU("nVIDIA", 4)
+#
+#     def info_details(self):
+#         return f"{self.cpu.info()} \n" \
+#                f"{self.ram.info()} \n" \
+#                f"{self.gpu.info()}"
+#
+# computer_1 = PC()
+# print(computer_1.info_details())
 
-    def info(self):
-        return f"CPU: {self.brand}, Cores: {self.cores}"
+###############################
+###############################
+###############################
+#Практические задания
+############################### 1
+# Система управления инвентарем. Создайте класс Inventory,
+# который содержит методы add_item, remove_item и get_inventory_value. Также
+# создайте статические методы calculate_item_value и validate_item. Используйте
+# эти статические методы внутри обычных методов для выполнения
+# вспомогательных операций.
 
-class RAM:
-    def __init__(self, size):
-        self.size = size
-
-    def info(self):
-        return f"RAM: {self.size}Gb"
-
-class GPU:
-    def __init__(self, brend, memory):
-        self.brand = brend
-        self.memory = memory
-
-    def info(self):
-        return f"GPU: {self.brand} Memory: {self.memory}"
-
-class PC:
+class Inventory:
     def __init__(self):
-        self.cpu = CPU("Intel", 5)
-        self.ram = RAM(16)
-        self.gpu = GPU("nVIDIA", 4)
+        self.item = {}
 
-    def info_details(self):
-        return f"{self.cpu.info()} \n" \
-               f"{self.ram.info()} \n" \
-               f"{self.gpu.info()}"
+    def add_item(self, name, price, quantity):
+        if Inventory.validate_item(name, price, quantity):
+            if name in self.item:
+                self.item[name]['Количество'] += quantity
+            else:
+                self.item[name] = {'Цена': price, 'Количество': quantity}
+        else:
+            print('Некорректные данные!')
 
-computer_1 = PC()
-print(computer_1.info_details())
+    def remove_item(self, name, price, quantity):
+        if name in self.item and self.item[name]['Количество'] >= quantity:
+            self.item[name]['Количество'] -= quantity
+            if self.item[name]['Количество'] == 0:
+                del self.item[name]
+        else:
+            print(f'Невозможно удалить {quantity} единиц {name}')
+
+    def get_inventory_value(self):
+        total_value = 0
+        for details in self.item.values():
+            total_value += Inventory.calculate_item_value(details['Цена'], details['Количество'])
+        return total_value
+
+    @staticmethod
+    def calculate_item_value(price, quantity):
+        return price * quantity
+
+    @staticmethod
+    def validate_item(name, price, quantity):
+        return isinstance(name, str) and price > 0 and quantity > 0
+
+inv_1 = Inventory()
+inv_1.add_item('Molotok', 1, 10)
+inv_1.add_item('Kosa', 1, 10)
+print(inv_1.get_inventory_value())
