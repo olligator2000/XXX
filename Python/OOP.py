@@ -581,42 +581,142 @@ import datetime
 # эти статические методы внутри обычных методов для выполнения
 # вспомогательных операций.
 
-class Inventory:
-    def __init__(self):
-        self.item = {}
+# class Inventory:
+#     def __init__(self):
+#         self.item = {}
+#
+#     def add_item(self, name, price, quantity):
+#         if Inventory.validate_item(name, price, quantity):
+#             if name in self.item:
+#                 self.item[name]['Количество'] += quantity
+#             else:
+#                 self.item[name] = {'Цена': price, 'Количество': quantity}
+#         else:
+#             print('Некорректные данные!')
+#
+#     def remove_item(self, name, price, quantity):
+#         if name in self.item and self.item[name]['Количество'] >= quantity:
+#             self.item[name]['Количество'] -= quantity
+#             if self.item[name]['Количество'] == 0:
+#                 del self.item[name]
+#         else:
+#             print(f'Невозможно удалить {quantity} единиц {name}')
+#
+#     def get_inventory_value(self):
+#         total_value = 0
+#         for details in self.item.values():
+#             total_value += Inventory.calculate_item_value(details['Цена'], details['Количество'])
+#         return total_value
+#
+#     @staticmethod
+#     def calculate_item_value(price, quantity):
+#         return price * quantity
+#
+#     @staticmethod
+#     def validate_item(name, price, quantity):
+#         return isinstance(name, str) and price > 0 and quantity > 0
+#
+# inv_1 = Inventory()
+# inv_1.add_item('Molotok', 1, 10)
+# inv_1.add_item('Kosa', 1, 10)
+# print(inv_1.get_inventory_value())
 
-    def add_item(self, name, price, quantity):
-        if Inventory.validate_item(name, price, quantity):
-            if name in self.item:
-                self.item[name]['Количество'] += quantity
-            else:
-                self.item[name] = {'Цена': price, 'Количество': quantity}
-        else:
-            print('Некорректные данные!')
+############################################################
+# from datetime import date
+#
+# class Person:
+#
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+#
+#     @classmethod
+#     def from_date(cls, name, bd):
+#         current_year = date.today().year
+#         age = current_year - bd
+#         return cls(name, age)
+#
+#
+# person_1 = Person('Alex', 30)
+# print(person_1.name, person_1.age)
+#
+# person_2 = Person('Oleg', 1984)
+# print(person_2.name, person_2.age)
 
-    def remove_item(self, name, price, quantity):
-        if name in self.item and self.item[name]['Количество'] >= quantity:
-            self.item[name]['Количество'] -= quantity
-            if self.item[name]['Количество'] == 0:
-                del self.item[name]
-        else:
-            print(f'Невозможно удалить {quantity} единиц {name}')
+############################################################
 
-    def get_inventory_value(self):
-        total_value = 0
-        for details in self.item.values():
-            total_value += Inventory.calculate_item_value(details['Цена'], details['Количество'])
-        return total_value
+# class User:
+#
+#     MIN_AGE = 18
+#
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+#
+#     @classmethod
+#     def is_valid_user(cls, age):
+#         return age >= cls.MIN_AGE
+#
+# print(User.is_valid_user(15))
+# print(User.is_valid_user(20))
 
-    @staticmethod
-    def calculate_item_value(price, quantity):
-        return price * quantity
+############################################################ 1
+# Создайте класс Student с методом класса from_dict, который создает
+# экземпляр студента из словаря с ключами 'name', 'age' и 'grade'
 
-    @staticmethod
-    def validate_item(name, price, quantity):
-        return isinstance(name, str) and price > 0 and quantity > 0
+# class Student:
+#
+#     def __init__(self, name, age, grade):
+#         self.name = name
+#         self.age = age
+#         self.grade = grade
+#
+#     @classmethod
+#     def from_dict(cls, data_student):
+#         return cls(data_student['name'],
+#                    data_student['age'],
+#                    data_student['grade']
+#                    )
+#
+# data = {'name': 'Alex', 'age': 30, 'grade': 5}
+# std = Student.from_dict(data)
+# print(std.name)
 
-inv_1 = Inventory()
-inv_1.add_item('Molotok', 1, 10)
-inv_1.add_item('Kosa', 1, 10)
-print(inv_1.get_inventory_value())
+############################################################ 2
+# Создайте класс Pizza с методом класса margherita и pepperoni, которые
+# создают объекты пиццы с фиксированными ингредиентами
+
+class Pizza:
+    def __init__(self, name, size, dough, sauce, vegetables, cheese, herbs, sausage):
+        self.name = name
+        self.size = size
+        self.dough = dough
+        self.sauce = sauce
+        self.vegetables = vegetables
+        self.cheese = cheese
+        self.herbs = herbs
+        self.sausage = sausage
+
+    @classmethod
+    def margherita(cls):
+        return cls("margherita", 45, "тесто-хрустящее", "соус-фигоус", "овощи-помидоры", "сыр-мацарелла", "травы-итальянские")
+
+    @classmethod
+    def pepperoni(cls):
+        return cls("pepperoni", 45, "тесто-хрустящее", "колбаски-пепперони")
+
+    def info(self):
+        print(f"Название: {self.name}"
+              f"Размер: {self.size}"
+              f"Тесто: {self.dough}"
+              f"Соус: {self.sauce}"
+              f"Овощи: {self.vegetables}"
+              f"Сыр: {self.cheese}"
+              f"Травы: {self.herbs}"
+              f"Колбаски: {self.sausage}")
+
+
+pizza_1 = Pizza("Три сыра", 45, "Хрустящее", "Сливочный", "Помидоры", "Венский")
+pizza_1.info()
+pizza_2 = Pizza()
+
