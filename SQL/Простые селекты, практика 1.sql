@@ -31,6 +31,10 @@ select product_name, list_price
 from production.products
 where list_price > 1000 and list_price < 1500
 
+select product_name, list_price
+from production.products
+where list_price between 1000 and 1500
+
 --5) вывести название id и цену самого дорогого велосипеда дешевле 3 тысяч
 
 select top 1 product_id, product_name, list_price
