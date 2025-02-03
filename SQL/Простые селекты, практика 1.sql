@@ -42,6 +42,11 @@ from production.products
 where list_price < 3000
 order by list_price desc
 
---6) разобраться с between,
---7) вывести все велосипеды с категориями 2, 6 и 7
+--6) вывести все велосипеды с категориями 2, 6 и 7
+select *
+from production.products
+where category_id = 2 or category_id = 6 or category_id = 7
 
+select *
+from production.products
+where category_id in (2, 6, 7)
