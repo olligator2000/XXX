@@ -128,7 +128,6 @@
 # bot.polling()
 
 
-
 ####################################################### Бот для поиска фильмов
 
 # import telebot
@@ -331,6 +330,7 @@
 # • Сделать голосовое озвучивание новостей (pyttsx3).
 # • Подключить возможность фильтровать фейковые новости.
 
+from datetime import date
 import telebot
 import requests
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
@@ -341,15 +341,19 @@ NEWS_API_KEY = "pub_740976a50713043bac6ec9aa65409f1ec42e6"
 
 bot = telebot.TeleBot(BOT_API)
 
+today = date.today()
+formatted_date = today.strftime("%Y-%m-%d")
+
 
 def main_menu():
     markup = ReplyKeyboardMarkup(row_width=2)
     button_1 = KeyboardButton("Получить последние новости")
-    button_2 = KeyboardButton("Подписаться/отписаться на темы")
-    button_3 = KeyboardButton("Получить последние новости по подписке")
-    button_4 = KeyboardButton("Вкл/выкл автоматическую отправку новостей по подписке каждый день")
-    button_5 = KeyboardButton("Информация/Помощь")
-    markup.add(button_1, button_2, button_3, button_4, button_5)
+    button_2 = KeyboardButton("Получить новости по ключевому слову")
+    button_3 = KeyboardButton("Подписаться/отписаться на темы")
+    button_4 = KeyboardButton("Получить последние новости по подписке")
+    button_5 = KeyboardButton("Вкл/выкл автоматическую отправку новостей по подписке каждый день")
+    button_6 = KeyboardButton("Информация/Мои подписки")
+    markup.add(button_1, button_2, button_3, button_4, button_5, button_6)
     return markup
 
 
@@ -365,58 +369,86 @@ def main_menu_subscription():
     return markup
 
 
-def latest_news(news):
+def latest_news():
     url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}&country=ru&language=ru'
     response = requests.get(url).json()
+    keys = response["results"]
 
-    if response.get("main"):
-        return (
-            f'Название статьи: {title}\n'
-            f'Температура: {response["main"]["temp"]}°C\n'
-            f'Влажность: {response["main"]["humidity"]}%\n'
-            f'Ветер: {response["wind"]["speed"]}м/с\n'
-            f'Давление: {response["main"]["pressure"]}рт.ст.\n'
+    for i in range(len(keys)):
+        dt_string = keys[i]["pubDate"]
+        if keys[i]["category"] == "top" or dt_string[:10] == formatted_date:
+            article_info = (
+                f'Название статьи: {keys[i]["title"]}\n'
+                f'Ссылка на источник: {keys[i]["link"]}\n'
+                f'Автор новостной статьи: {keys[i]["creator"]}\n'
+                f'Дата публикации: {keys[i]["pubDate"]}\n'
+            )
+            poster = keys[i]["image_url"]
+            return article_info, poster
+        else:
+            return "Свежих новостей нет!"
+
+
+def key_word_news(key_word):
+    url = f'https://newsdata.io/api/1/latest?q={key_word}&apikey={NEWS_API_KEY}&country=ru&language=ru'
+    response = requests.get(url).json()
+
+    if response.get("keywords") == key_word:
+        article_info = (
+            f'Название статьи: {response["title"]}\n'
+            f'Ссылка на источник: {response["link"]}\n'
+            f'Автор новостной статьи: {response["creator"]}\n'
+            f'Дата публикации: {response["pubDate"]}\n'
         )
+        poster = response.get("image_url", "")
+        return article_info, poster
     else:
-        return "Город не найден"
-
-# def get_weather(city):
-#     url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}&q={}'
-#     response = requests.get(url).json()
-#
-#     if response.get("main"):
-#         return (
-#             f'Название статьи: {title}\n'
-#             f'Температура: {response["main"]["temp"]}°C\n'
-#             f'Влажность: {response["main"]["humidity"]}%\n'
-#             f'Ветер: {response["wind"]["speed"]}м/с\n'
-#             f'Давление: {response["main"]["pressure"]}рт.ст.\n'
-#         )
-#     else:
-#         return "Город не найден"
+        return "Новостей по ключевому слову не найдено!"
 
 
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.send_message(message.chat.id, "😎Привет! Я бот новостей.😎\n"
-                                        "Выбери город или введи название:", reply_markup=main_menu())
+                                      "Выбери нужный пункт меню:\n", reply_markup=main_menu())
 
 
-@bot.message_handler(func=lambda message: message.text in ["Москва", "Санкт-Петербург"])
-def handle_buttons(message):
-    city = message.text
-    bot.send_message(message.chat.id, get_weather(city))
+@bot.message_handler(func=lambda message: message.text == "Получить последние новости")
+def search_article(message):
+    article_info, poster = latest_news()
+    if poster and poster != "null":
+        bot.send_photo(message.chat.id, poster, caption=article_info, parse_mode="Markdown")
+    else:
+        bot.send_message(message.chat.id, article_info, parse_mode="Markdown")
 
 
-@bot.message_handler(func=lambda message: message.text == "Ввести город")
-def handle_buttons(message):
-    bot.send_message(message.chat.id, "Введите название города")
-    bot.register_next_step_handler(message, send_weather)
+# @bot.message_handler(func=lambda message: message.text == "Ввести город")
+# def handle_buttons(message):
+#     bot.send_message(message.chat.id, "Введите название города")
+#     bot.register_next_step_handler(message, send_weather)
 
 
-def send_weather(message):
-    city = message.text
-    bot.send_message(message.chat.id, get_weather(city))
+
+# @bot.message_handler(func=lambda message: True)
+# def search_movie(message):
+#     movie_info, poster = get_movie_info(message.text)
+#     if poster and poster != "N/A":
+#         bot.send_photo(message.chat.id, poster, caption=movie_info, parse_mode="Markdown")
+#     else:
+#         bot.send_message(message.chat.id, movie_info, parse_mode="Markdown")
+
+
+# @bot.message_handler(func=lambda message: message.text in ["Москва", "Санкт-Петербург"])
+# def handle_buttons(message):
+#     city = message.text
+#     bot.send_message(message.chat.id, get_weather(city))
+#
+#
+
+#
+#
+# def send_weather(message):
+#     city = message.text
+#     bot.send_message(message.chat.id, get_weather(city))
 
 
 bot.polling()
