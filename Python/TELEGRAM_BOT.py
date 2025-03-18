@@ -375,7 +375,7 @@ def main_menu_subscription():
 
 
 def latest_news():
-    url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}&country=ru&language=ru'
+    url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}'
     response = requests.get(url).json()
     keys = response["results"]
 
@@ -414,13 +414,14 @@ def key_word_news(key_word):
         return "Новостей по ключевому слову не найдено!"
 
 
-def latest_news_subscription(*message):
-    url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}&country=ru&language=ru'
+def latest_news_subscription():
+    global list_subscriptions
+    url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}'
     response = requests.get(url).json()
     keys = response["results"]
-
+    science1, music1, technology1, sports1, economics1, politics1 = list_subscriptions
     for i in range(len(keys)):
-        if keys[i]["category"] == ["sports" if sports is True else False] or keys[i]["category"] == ["sports" if sports is True else False] or:
+        if keys[i]["category"] == "sports":
             article_info = (
                 f'*Название статьи:* {keys[i]["title"]}\n'
                 f'*Ссылка на источник:* {keys[i]["link"]}\n'
@@ -479,7 +480,23 @@ def handle_buttons(message):
     bot.register_next_step_handler(message, send_news_subscriptions)
 
 
+@bot.message_handler(func=lambda message: message.text == "Получить последние новости по подписке")
+def search_article(message):
+    try:
+        article_info, poster = latest_news_subscription()
+        if poster and poster != "null":
+            bot.send_photo(message.chat.id, poster, caption=article_info, parse_mode="Markdown")
+        else:
+            bot.send_message(message.chat.id, article_info, parse_mode="Markdown")
+    except:
+        bot.send_message(message.chat.id, "Новостей по подпискам нет!", parse_mode="Markdown")
+
+
+list_subscriptions = [False, False, False, False, False, False]
+
+
 def send_news_subscriptions(message):
+    global list_subscriptions
     subscriptions = [message.text]
     if "Наука" in subscriptions:
         science = True
@@ -499,9 +516,15 @@ def send_news_subscriptions(message):
         sports = False
     if "Экономика" in subscriptions:
         economics = True
+    else:
+        economics = False
     if "Политика" in subscriptions:
         politics = True
-    bot.send_message(message.chat.id, latest_news_subscription(subscriptions))
+    else:
+        politics = False
+    science, music, technology, sports, economics, politics = list_subscriptions
+    return list_subscriptions
+
 
 
 
