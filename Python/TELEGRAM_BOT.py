@@ -330,7 +330,7 @@
 # • Сделать голосовое озвучивание новостей (pyttsx3).
 # • Подключить возможность фильтровать фейковые новости.
 
-from datetime import date
+from datetime import date, timedelta
 import telebot
 import requests
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
@@ -342,30 +342,35 @@ NEWS_API_KEY = "pub_740976a50713043bac6ec9aa65409f1ec42e6"
 bot = telebot.TeleBot(BOT_API)
 
 today = date.today()
-formatted_date = today.strftime("%Y-%m-%d")
+yesterday = today - timedelta(days=1)
+formatted_date_today = today.strftime("%Y-%m-%d")
+formatted_date_yesterday = yesterday.strftime("%Y-%m-%d")
 
 
 def main_menu():
     markup = ReplyKeyboardMarkup(row_width=2)
     button_1 = KeyboardButton("Получить последние новости")
     button_2 = KeyboardButton("Получить новости по ключевому слову")
-    button_3 = KeyboardButton("Подписаться/отписаться на темы")
-    button_4 = KeyboardButton("Получить последние новости по подписке")
-    button_5 = KeyboardButton("Вкл/выкл автоматическую отправку новостей по подписке каждый день")
-    button_6 = KeyboardButton("Информация/Мои подписки")
-    markup.add(button_1, button_2, button_3, button_4, button_5, button_6)
+    button_3 = KeyboardButton("Подписаться на темы")
+    button_4 = KeyboardButton("Отписаться от тем")
+    button_5 = KeyboardButton("Получить последние новости по подписке")
+    button_6 = KeyboardButton("Вкл автоматическую отправку новостей")
+    button_7 = KeyboardButton("Выкл автоматическую отправку новостей")
+    button_8 = KeyboardButton("Информация/Мои подписки")
+    markup.add(button_1, button_2, button_3, button_4, button_5, button_6, button_7, button_8)
     return markup
 
 
 def main_menu_subscription():
     markup = ReplyKeyboardMarkup(row_width=2)
-    button_1 = KeyboardButton("Наука")
-    button_2 = KeyboardButton("Музыка")
+    button_1 = KeyboardButton("Бизнес")
+    button_2 = KeyboardButton("Развлечение")
     button_3 = KeyboardButton("Технологии")
     button_4 = KeyboardButton("Спорт")
     button_5 = KeyboardButton("Экономика")
-    button_6 = KeyboardButton("Назад ↩️")
-    markup.add(button_1, button_2, button_3, button_4, button_5, button_6)
+    button_6 = KeyboardButton("Политика")
+    button_7 = KeyboardButton("Назад↩️")
+    markup.add(button_1, button_2, button_3, button_4, button_5, button_6, button_7)
     return markup
 
 
@@ -376,12 +381,13 @@ def latest_news():
 
     for i in range(len(keys)):
         dt_string = keys[i]["pubDate"]
-        if keys[i]["category"] == "top" or dt_string[:10] == formatted_date:
+        if keys[i]["category"] == "top" or dt_string[:10] == formatted_date_today:
             article_info = (
-                f'Название статьи: {keys[i]["title"]}\n'
-                f'Ссылка на источник: {keys[i]["link"]}\n'
-                f'Автор новостной статьи: {keys[i]["creator"]}\n'
-                f'Дата публикации: {keys[i]["pubDate"]}\n'
+                f'*Название статьи:* {keys[i]["title"]}\n'
+                f'*Ссылка на источник:* {keys[i]["link"]}\n'
+                f'*Автор новостной статьи:* {keys[i]["creator"]}\n'
+                f'*Дата публикации:* {keys[i]["pubDate"]}\n'
+                f'Категория: {keys[i]["category"]}\n'
             )
             poster = keys[i]["image_url"]
             return article_info, poster
@@ -392,18 +398,40 @@ def latest_news():
 def key_word_news(key_word):
     url = f'https://newsdata.io/api/1/latest?q={key_word}&apikey={NEWS_API_KEY}&country=ru&language=ru'
     response = requests.get(url).json()
+    keys = response["results"]
 
-    if response.get("keywords") == key_word:
+    for i in range(len(keys)):
         article_info = (
-            f'Название статьи: {response["title"]}\n'
-            f'Ссылка на источник: {response["link"]}\n'
-            f'Автор новостной статьи: {response["creator"]}\n'
-            f'Дата публикации: {response["pubDate"]}\n'
+            f'*Название статьи:* {keys[i]["title"]}\n'
+            f'*Ссылка на источник:* {keys[i]["link"]}\n'
+            f'*Автор новостной статьи:* {keys[i]["creator"]}\n'
+            f'*Дата публикации:* {keys[i]["pubDate"]}\n'
+            f'Категория: {keys[i]["category"]}\n'
         )
-        poster = response.get("image_url", "")
+        poster = keys[i]["image_url"]
         return article_info, poster
     else:
         return "Новостей по ключевому слову не найдено!"
+
+
+def latest_news_subscription(*message):
+    url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}&country=ru&language=ru'
+    response = requests.get(url).json()
+    keys = response["results"]
+
+    for i in range(len(keys)):
+        if keys[i]["category"] == ["sports" if sports is True else False] or keys[i]["category"] == ["sports" if sports is True else False] or:
+            article_info = (
+                f'*Название статьи:* {keys[i]["title"]}\n'
+                f'*Ссылка на источник:* {keys[i]["link"]}\n'
+                f'*Автор новостной статьи:* {keys[i]["creator"]}\n'
+                f'*Дата публикации:* {keys[i]["pubDate"]}\n'
+                f'Категория: {keys[i]["category"]}\n'
+            )
+            poster = keys[i]["image_url"]
+            return article_info, poster
+        else:
+            return "Свежих новостей нет!"
 
 
 @bot.message_handler(commands=['start'])
@@ -412,43 +440,71 @@ def start(message):
                                       "Выбери нужный пункт меню:\n", reply_markup=main_menu())
 
 
+@bot.message_handler(func=lambda message: message.text == "Подписаться на темы")
+def subscription(message):
+    bot.send_message(message.chat.id, "Выбери темы для подписки:\n", reply_markup=main_menu_subscription())
+
+
 @bot.message_handler(func=lambda message: message.text == "Получить последние новости")
 def search_article(message):
-    article_info, poster = latest_news()
-    if poster and poster != "null":
-        bot.send_photo(message.chat.id, poster, caption=article_info, parse_mode="Markdown")
+    try:
+        article_info, poster = latest_news()
+        if poster and poster != "null":
+            bot.send_photo(message.chat.id, poster, caption=article_info, parse_mode="Markdown")
+        else:
+            bot.send_message(message.chat.id, article_info, parse_mode="Markdown")
+    except:
+        bot.send_message(message.chat.id, "Свежих новостей нет!", parse_mode="Markdown")
+
+
+@bot.message_handler(func=lambda message: message.text == "Получить новости по ключевому слову")
+def handle_buttons(message):
+    bot.send_message(message.chat.id, "Введите ключевое слово:")
+    bot.register_next_step_handler(message, send_news)
+
+
+def send_news(message):
+    news = message.text
+    bot.send_message(message.chat.id, key_word_news(news))
+
+
+@bot.message_handler(func=lambda message: message.text == 'Назад↩️')
+def start(message):
+    bot.send_message(message.chat.id, 'Главное меню:', reply_markup=main_menu())
+
+
+@bot.message_handler(func=lambda message: message.text == "Подписаться на темы")
+def handle_buttons(message):
+    bot.send_message(message.chat.id, "Выбирите темы для подписки:")
+    bot.register_next_step_handler(message, send_news_subscriptions)
+
+
+def send_news_subscriptions(message):
+    subscriptions = [message.text]
+    if "Наука" in subscriptions:
+        science = True
     else:
-        bot.send_message(message.chat.id, article_info, parse_mode="Markdown")
+        science = False
+    if "Музыка" in subscriptions:
+        music = True
+    else:
+        music = False
+    if "Технологии" in subscriptions:
+        technology = True
+    else:
+        technology = False
+    if "Спорт" in subscriptions:
+        sports = True
+    else:
+        sports = False
+    if "Экономика" in subscriptions:
+        economics = True
+    if "Политика" in subscriptions:
+        politics = True
+    bot.send_message(message.chat.id, latest_news_subscription(subscriptions))
 
 
-# @bot.message_handler(func=lambda message: message.text == "Ввести город")
-# def handle_buttons(message):
-#     bot.send_message(message.chat.id, "Введите название города")
-#     bot.register_next_step_handler(message, send_weather)
 
-
-
-# @bot.message_handler(func=lambda message: True)
-# def search_movie(message):
-#     movie_info, poster = get_movie_info(message.text)
-#     if poster and poster != "N/A":
-#         bot.send_photo(message.chat.id, poster, caption=movie_info, parse_mode="Markdown")
-#     else:
-#         bot.send_message(message.chat.id, movie_info, parse_mode="Markdown")
-
-
-# @bot.message_handler(func=lambda message: message.text in ["Москва", "Санкт-Петербург"])
-# def handle_buttons(message):
-#     city = message.text
-#     bot.send_message(message.chat.id, get_weather(city))
-#
-#
-
-#
-#
-# def send_weather(message):
-#     city = message.text
-#     bot.send_message(message.chat.id, get_weather(city))
 
 
 bot.polling()
