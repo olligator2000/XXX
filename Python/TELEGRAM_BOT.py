@@ -330,15 +330,15 @@
 # • Сделать голосовое озвучивание новостей (pyttsx3).
 # • Подключить возможность фильтровать фейковые новости.
 
+
 import re
-import threading
 import schedule
 import time
 from datetime import date, timedelta
 import telebot
 import requests
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
-from newsdataapi import NewsDataApiClient
+
 
 BOT_API = "7770590397:AAHBSzmBrZLiZxYe5JJHTh-2QvTm2K1I3r8"
 NEWS_API_KEY = "pub_740976a50713043bac6ec9aa65409f1ec42e6"
@@ -398,23 +398,6 @@ def escape_markdown(text):
     return re.sub(f'([{re.escape(escape_chars)}])', r'\\\1', text)
 
 
-# def time_schedule():
-#     try:
-#         # bot.send_message(message.chat.id, "⏱Получить последние новости")
-#         print("Сообщение отправлено!")
-#     except Exception as e:
-#         print(f"Ошибка при отправке сообщения: {e}")
-#
-#
-# # Планирование задачи
-# schedule.every(5).seconds.do(time_schedule)  # Каждые 5 секунд
-# # schedule.every().day.at("10:00").do(my_function)  # Каждый день в 10:00
-#
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)
-
-
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.send_message(message.chat.id, "📰*Привет! Я бот новостей.*📰\n"
@@ -428,18 +411,38 @@ def subscription(message):
 
 @bot.message_handler(func=lambda message: message.text == "❌Отписаться от тем")
 def subscription(message):
-    bot.send_message(message.chat.id, "Выбери темы для подписки:\n", reply_markup=main_menu_subscription_off())
+    global list_subscriptions
+    global list_schedule
+    not_subscription = [False, False, False, False, False, False, False, False]
+    if not_subscription == list_subscriptions:
+        bot.send_message(message.chat.id, '*Сначала надо подписаться на темы!*😉', reply_markup=main_menu(),
+                         parse_mode="Markdown")
+    else:
+        bot.send_message(message.chat.id, "Выбери темы для подписки:\n", reply_markup=main_menu_subscription_off())
+
+
+list_schedule = False
 
 
 @bot.message_handler(func=lambda message: message.text == "🟢Вкл автоматическую отправку новостей")
 def auto_news(message):
+    global list_subscriptions
     global list_schedule
-    if list_schedule is False:
-        list_schedule = True
-        bot.send_message(message.chat.id, f'*Автоматическая отправка новостей включена!*🟢', parse_mode="Markdown")
+    not_subscription = [False, False, False, False, False, False, False, False]
+    if not_subscription == list_subscriptions:
+        bot.send_message(message.chat.id, '*Сначала надо подписаться на темы!*😉', reply_markup=main_menu(), parse_mode="Markdown")
     else:
-        bot.send_message(message.chat.id, '*Уже включена!*🙄', parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', parse_mode="Markdown")
+        if list_schedule is False:
+            list_schedule = True
+            bot.send_message(message.chat.id, f'*Автоматическая отправка новостей включена!*🟢', parse_mode="Markdown")
+            # Планирование задачи
+            schedule.every(30).seconds.do(time_schedule)  # Каждые 20 секунд
+            # schedule.every().day.at("9:00").do(my_function)  # Каждый день в 10:00
+            while list_schedule:
+                schedule.run_pending()
+                time.sleep(1)
+        else:
+            bot.send_message(message.chat.id, '*Уже включена!*🙄', parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == "🔴Выкл автоматическую отправку новостей")
@@ -447,35 +450,89 @@ def auto_news(message):
     global list_schedule
     if list_schedule is True:
         list_schedule = False
-        bot.send_message(message.chat.id, f'*Автоматическая отправка новостей выключена!*🔴', parse_mode="Markdown")
+        bot.send_message(message.chat.id, f'*Автоматическая отправка новостей отключена!*🔴', parse_mode="Markdown")
     else:
         bot.send_message(message.chat.id, '*Уже выключена!*🙄', parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', parse_mode="Markdown")
+
+
+def time_schedule():
+    global list_subscriptions
+    top, entertainment, business, sports, economics, politics, technology, world = list_subscriptions
+    url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}'
+    response = requests.get(url).json()
+    keys = response["results"]
+    not_keys = []
+    count = 0
+    not_subscription = [False, False, False, False, False, False, False, False]
+    if not_subscription == list_subscriptions:
+        bot.send_message(chat_id="484938227", text="*Вы еще не подписались ни на одну тему!*😞", reply_markup=main_menu(), parse_mode="Markdown")
+    else:
+        if keys == not_keys:
+            bot.send_message(chat_id="484938227", text="*Новостей по подписке не найдено!*😞", reply_markup=main_menu(),
+                             parse_mode="Markdown")
+        else:
+            for i in range(len(keys)):
+                try:
+                    if keys[i]["category"] == ["top" if top is True else False] \
+                            or keys[i]["category"] == ["entertainment" if entertainment is True else False] \
+                            or keys[i]["category"] == ["business" if business is True else False] \
+                            or keys[i]["category"] == ["sports" if sports is True else False] \
+                            or keys[i]["category"] == ["economics" if economics is True else False] \
+                            or keys[i]["category"] == ["politics" if politics is True else False] \
+                            or keys[i]["category"] == ["technology" if technology is True else False] \
+                            or keys[i]["category"] == ["world" if world is True else False]:
+                        count += 1
+                        article_info = (
+                            f'✒️Название статьи: {keys[i]["title"]}\n'
+                            f'🔗Ссылка на источник: {keys[i]["link"]}\n'
+                            f'©️Автор новостной статьи: {keys[i]["creator"]}\n'
+                            f'🗓️Дата публикации: {keys[i]["pubDate"]}\n'
+                            f'📌Категория: {keys[i]["category"]}\n'
+                        )
+                        poster = keys[i]["image_url"]
+                        if poster and poster is not None:
+                            bot.send_photo(chat_id="484938227", photo=poster, caption=article_info)
+                        else:
+                            bot.send_message(chat_id="484938227", text=article_info)
+                except Exception as e:
+                    print(e)
+                    continue
+    if count == 0:
+        bot.send_message(chat_id="484938227", text="*Новостей по подписке не найдено!*😞😞😞", reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == "⏱Получить последние новости")
 def handle_buttons(message):
-    try:
-        url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}'
-        response = requests.get(url).json()
-        keys = response["results"]
+    url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}'
+    response = requests.get(url).json()
+    keys = response["results"]
+    not_keys = []
+    count = 0
+    if keys == not_keys:
+        bot.send_message(message.chat.id, "*Последних новостей нет!*😞", parse_mode="Markdown")
+    else:
         for i in range(len(keys)):
-            dt_string = keys[i]["pubDate"]
-            if dt_string[:10] == formatted_date_today or dt_string[:10] == formatted_date_yesterday:
-                article_info = (
-                    f'✒️Название статьи: {keys[i]["title"]}\n'
-                    f'🔗Ссылка на источник: {keys[i]["link"]}\n'
-                    f'©️Автор новостной статьи: {keys[i]["creator"]}\n'
-                    f'🗓️Дата публикации: {keys[i]["pubDate"]}\n'
-                    f'📌Категория: {keys[i]["category"]}\n'
-                )
-                poster = keys[i]["image_url"]
-                if poster and poster != ["null"]:
-                    bot.send_photo(message.chat.id, poster, caption=article_info, parse_mode="HTML")
-                else:
-                    bot.send_message(message.chat.id, article_info, parse_mode="MarkdownV2")
-    except:
-        bot.send_message(message.chat.id, "*Свежих новостей больше нет!*😞", parse_mode="Markdown")
+            try:
+                dt_string = keys[i]["pubDate"]
+                if dt_string[:10] == formatted_date_today or dt_string[:10] == formatted_date_yesterday:
+                    count += 1
+                    article_info = (
+                        f'✒️Название статьи: {keys[i]["title"]}\n'
+                        f'🔗Ссылка на источник: {keys[i]["link"]}\n'
+                        f'©️Автор новостной статьи: {keys[i]["creator"]}\n'
+                        f'🗓️Дата публикации: {keys[i]["pubDate"]}\n'
+                        f'📌Категория: {keys[i]["category"]}\n'
+                    )
+                    poster = keys[i]["image_url"]
+                    if poster and poster is not None:
+                        bot.send_photo(message.chat.id, poster, caption=article_info)
+                    else:
+                        bot.send_message(message.chat.id, article_info)
+            except Exception as e:
+                print(e)
+                continue
+    if count == 0:
+        bot.send_message(message.chat.id, "*Последних новостей нет!*😞", parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == "🗝Получить новости по ключевому слову")
@@ -486,45 +543,15 @@ def handle_buttons(message):
 
 def send_news(message):
     key_word = message.text
-
-    try:
-        url = f'https://newsdata.io/api/1/latest?q={key_word}&apikey={NEWS_API_KEY}'
-        response = requests.get(url).json()
-        keys = response["results"]
+    url = f'https://newsdata.io/api/1/latest?q={key_word}&apikey={NEWS_API_KEY}'
+    response = requests.get(url).json()
+    keys = response["results"]
+    not_keys = []
+    if keys == not_keys:
+        bot.send_message(message.chat.id, "*Новостей по ключевому слову не найдено!*😞", reply_markup=main_menu(), parse_mode="Markdown")
+    else:
         for i in range(len(keys)):
-            article_info = (
-                f'✒️Название статьи: {keys[i]["title"]}\n'
-                f'🔗Ссылка на источник: {keys[i]["link"]}\n'
-                f'©️Автор новостной статьи: {keys[i]["creator"]}\n'
-                f'🗓️Дата публикации: {keys[i]["pubDate"]}\n'
-                f'📌Категория: {keys[i]["category"]}\n'
-            )
-            poster = keys[i]["image_url"]
-            if poster and poster != ["null"]:
-                bot.send_photo(message.chat.id, poster, caption=article_info, parse_mode="HTML")
-            else:
-                bot.send_message(message.chat.id, article_info, parse_mode="MarkdownV2")
-    except:
-        bot.send_message(message.chat.id, "*Новостей по ключевому слову больше нет!*😞", parse_mode="Markdown")
-
-
-@bot.message_handler(func=lambda message: message.text == "📬Получить новости по подписке")
-def give_news_subscription(message):
-    global list_subscriptions
-    top, entertainment, business, sports, economics, politics, technology, world = list_subscriptions
-    try:
-        url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}'
-        response = requests.get(url).json()
-        keys = response["results"]
-        for i in range(len(keys)):
-            if keys[i]["category"] == ["top" if top is True else False] \
-                    or keys[i]["category"] == ["entertainment" if entertainment is True else False] \
-                    or keys[i]["category"] == ["business" if business is True else False] \
-                    or keys[i]["category"] == ["sports" if sports is True else False] \
-                    or keys[i]["category"] == ["economics" if economics is True else False] \
-                    or keys[i]["category"] == ["politics" if politics is True else False] \
-                    or keys[i]["category"] == ["technology" if technology is True else False] \
-                    or keys[i]["category"] == ["world" if world is True else False]:
+            try:
                 article_info = (
                     f'✒️Название статьи: {keys[i]["title"]}\n'
                     f'🔗Ссылка на источник: {keys[i]["link"]}\n'
@@ -533,12 +560,60 @@ def give_news_subscription(message):
                     f'📌Категория: {keys[i]["category"]}\n'
                 )
                 poster = keys[i]["image_url"]
-                if poster and poster != ["null"]:
-                    bot.send_photo(message.chat.id, poster, caption=article_info, parse_mode="HTML")
+                if poster and poster is not None:
+                    bot.send_photo(message.chat.id, poster, caption=article_info)
                 else:
-                    bot.send_message(message.chat.id, article_info, parse_mode="MarkdownV2")
-    except:
-        bot.send_message(message.chat.id, "*Свежих новостей больше нет!*😞", parse_mode="Markdown")
+                    bot.send_message(message.chat.id, article_info)
+            except Exception as e:
+                print(e)
+                continue
+
+
+@bot.message_handler(func=lambda message: message.text == "📬Получить новости по подписке")
+def give_news_subscription(message):
+    global list_subscriptions
+    top, entertainment, business, sports, economics, politics, technology, world = list_subscriptions
+    url = f'https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}'
+    response = requests.get(url).json()
+    keys = response["results"]
+    not_keys = []
+    count = 0
+    not_subscription = [False, False, False, False, False, False, False, False]
+    if not_subscription == list_subscriptions:
+        bot.send_message(message.chat.id, "*Вы еще не подписались ни на одну тему!*😞", parse_mode="Markdown")
+    else:
+        if keys == not_keys:
+            bot.send_message(message.chat.id, "*Новостей по подписке не найдено!*😞", reply_markup=main_menu(),
+                             parse_mode="Markdown")
+        else:
+            for i in range(len(keys)):
+                try:
+                    if keys[i]["category"] == ["top" if top is True else False] \
+                            or keys[i]["category"] == ["entertainment" if entertainment is True else False] \
+                            or keys[i]["category"] == ["business" if business is True else False] \
+                            or keys[i]["category"] == ["sports" if sports is True else False] \
+                            or keys[i]["category"] == ["economics" if economics is True else False] \
+                            or keys[i]["category"] == ["politics" if politics is True else False] \
+                            or keys[i]["category"] == ["technology" if technology is True else False] \
+                            or keys[i]["category"] == ["world" if world is True else False]:
+                        count += 1
+                        article_info = (
+                            f'✒️Название статьи: {keys[i]["title"]}\n'
+                            f'🔗Ссылка на источник: {keys[i]["link"]}\n'
+                            f'©️Автор новостной статьи: {keys[i]["creator"]}\n'
+                            f'🗓️Дата публикации: {keys[i]["pubDate"]}\n'
+                            f'📌Категория: {keys[i]["category"]}\n'
+                        )
+                        poster = keys[i]["image_url"]
+                        if poster and poster is not None:
+                            bot.send_photo(message.chat.id, poster, caption=article_info)
+                        else:
+                            bot.send_message(message.chat.id, article_info)
+                except Exception as e:
+                    print(e)
+                    continue
+        if count == 0:
+            bot.send_message(message.chat.id, "*Новостей по подписке не найдено!*😞", reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '🔝ТОП новости✅')
@@ -546,21 +621,24 @@ def start(message):
     global list_subscriptions
     if list_subscriptions[0] is False:
         list_subscriptions[0] = True
-        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', parse_mode="Markdown")
+        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', reply_markup=main_menu(), parse_mode="Markdown")
     else:
         bot.send_message(message.chat.id, '*Вы уже подписаны!🤷‍♂️*', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '🔝ТОП новости❌')
 def start(message):
     global list_subscriptions
-    if list_subscriptions[0] is True:
-        list_subscriptions[0] = False
-        bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', parse_mode="Markdown")
+    global list_schedule
+    if list_schedule is True:
+        bot.send_message(message.chat.id, f'*Сначала надо выкл авто рассылку!*☝', reply_markup=main_menu(),
+                         parse_mode="Markdown")
     else:
-        bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
+        if list_subscriptions[0] is True:
+            list_subscriptions[0] = False
+            bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', reply_markup=main_menu(), parse_mode="Markdown")
+        else:
+            bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '💃Развлечение✅')
@@ -568,21 +646,24 @@ def start(message):
     global list_subscriptions
     if list_subscriptions[1] is False:
         list_subscriptions[1] = True
-        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', parse_mode="Markdown")
+        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', reply_markup=main_menu(), parse_mode="Markdown")
     else:
         bot.send_message(message.chat.id, '*Вы уже подписаны!🤷‍♂️*', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '💃Развлечение❌')
 def start(message):
     global list_subscriptions
-    if list_subscriptions[1] is True:
-        list_subscriptions[1] = False
-        bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', parse_mode="Markdown")
+    global list_schedule
+    if list_schedule is True:
+        bot.send_message(message.chat.id, f'*Сначала надо выкл авто рассылку!*☝', reply_markup=main_menu(),
+                         parse_mode="Markdown")
     else:
-        bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
+        if list_subscriptions[1] is True:
+            list_subscriptions[1] = False
+            bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', reply_markup=main_menu(), parse_mode="Markdown")
+        else:
+            bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '💰Бизнес✅')
@@ -590,21 +671,25 @@ def start(message):
     global list_subscriptions
     if list_subscriptions[2] is False:
         list_subscriptions[2] = True
-        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', parse_mode="Markdown")
+        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', reply_markup=main_menu(), parse_mode="Markdown")
     else:
         bot.send_message(message.chat.id, '*Вы уже подписаны!🤷‍♂️*', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
+
 
 
 @bot.message_handler(func=lambda message: message.text == '💰Бизнес❌')
 def start(message):
     global list_subscriptions
-    if list_subscriptions[2] is True:
-        list_subscriptions[2] = False
-        bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', parse_mode="Markdown")
+    global list_schedule
+    if list_schedule is True:
+        bot.send_message(message.chat.id, f'*Сначала надо выкл авто рассылку!*☝', reply_markup=main_menu(),
+                         parse_mode="Markdown")
     else:
-        bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
+        if list_subscriptions[2] is True:
+            list_subscriptions[2] = False
+            bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', reply_markup=main_menu(), parse_mode="Markdown")
+        else:
+            bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '⚽Спорт✅')
@@ -612,21 +697,24 @@ def start(message):
     global list_subscriptions
     if list_subscriptions[3] is False:
         list_subscriptions[3] = True
-        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', parse_mode="Markdown")
+        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', reply_markup=main_menu(), parse_mode="Markdown")
     else:
         bot.send_message(message.chat.id, '*Вы уже подписаны!🤷‍♂️*', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '⚽Спорт❌')
 def start(message):
     global list_subscriptions
-    if list_subscriptions[3] is True:
-        list_subscriptions[3] = False
-        bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', parse_mode="Markdown")
+    global list_schedule
+    if list_schedule is True:
+        bot.send_message(message.chat.id, f'*Сначала надо выкл авто рассылку!*☝', reply_markup=main_menu(),
+                         parse_mode="Markdown")
     else:
-        bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
+        if list_subscriptions[3] is True:
+            list_subscriptions[3] = False
+            bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', reply_markup=main_menu(), parse_mode="Markdown")
+        else:
+            bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '📈Экономика✅')
@@ -634,21 +722,24 @@ def start(message):
     global list_subscriptions
     if list_subscriptions[4] is False:
         list_subscriptions[4] = True
-        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', parse_mode="Markdown")
+        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', reply_markup=main_menu(), parse_mode="Markdown")
     else:
         bot.send_message(message.chat.id, '*Вы уже подписаны!🤷‍♂️*', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '📈Экономика❌')
 def start(message):
     global list_subscriptions
-    if list_subscriptions[4] is True:
-        list_subscriptions[4] = False
-        bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', parse_mode="Markdown")
+    global list_schedule
+    if list_schedule is True:
+        bot.send_message(message.chat.id, f'*Сначала надо выкл авто рассылку!*☝', reply_markup=main_menu(),
+                         parse_mode="Markdown")
     else:
-        bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
+        if list_subscriptions[4] is True:
+            list_subscriptions[4] = False
+            bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', reply_markup=main_menu(), parse_mode="Markdown")
+        else:
+            bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '🇷🇺Политика✅')
@@ -656,21 +747,24 @@ def start(message):
     global list_subscriptions
     if list_subscriptions[5] is False:
         list_subscriptions[5] = True
-        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', parse_mode="Markdown")
+        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', reply_markup=main_menu(), parse_mode="Markdown")
     else:
         bot.send_message(message.chat.id, '*Вы уже подписаны!🤷‍♂️*', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '🇷🇺Политика❌')
 def start(message):
     global list_subscriptions
-    if list_subscriptions[5] is True:
-        list_subscriptions[5] = False
-        bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', parse_mode="Markdown")
+    global list_schedule
+    if list_schedule is True:
+        bot.send_message(message.chat.id, f'*Сначала надо выкл авто рассылку!*☝', reply_markup=main_menu(),
+                         parse_mode="Markdown")
     else:
-        bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
+        if list_subscriptions[5] is True:
+            list_subscriptions[5] = False
+            bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', reply_markup=main_menu(), parse_mode="Markdown")
+        else:
+            bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '🧬Технологии✅')
@@ -678,21 +772,24 @@ def start(message):
     global list_subscriptions
     if list_subscriptions[6] is False:
         list_subscriptions[6] = True
-        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', parse_mode="Markdown")
+        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', reply_markup=main_menu(), parse_mode="Markdown")
     else:
         bot.send_message(message.chat.id, '*Вы уже подписаны!🤷‍♂️*', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '🧬Технологии❌')
 def start(message):
     global list_subscriptions
-    if list_subscriptions[6] is True:
-        list_subscriptions[6] = False
-        bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', parse_mode="Markdown")
+    global list_schedule
+    if list_schedule is True:
+        bot.send_message(message.chat.id, f'*Сначала надо выкл авто рассылку!*☝', reply_markup=main_menu(),
+                         parse_mode="Markdown")
     else:
-        bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
+        if list_subscriptions[6] is True:
+            list_subscriptions[6] = False
+            bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', reply_markup=main_menu(), parse_mode="Markdown")
+        else:
+            bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '🌍Мир✅')
@@ -700,21 +797,24 @@ def start(message):
     global list_subscriptions
     if list_subscriptions[7] is False:
         list_subscriptions[7] = True
-        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', parse_mode="Markdown")
+        bot.send_message(message.chat.id, f'*Подписка успешно подключена!*🔔', reply_markup=main_menu(), parse_mode="Markdown")
     else:
         bot.send_message(message.chat.id, '*Вы уже подписаны!🤷‍♂️*', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == '🌍Мир❌')
 def start(message):
     global list_subscriptions
-    if list_subscriptions[7] is True:
-        list_subscriptions[7] = False
-        bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', parse_mode="Markdown")
+    global list_schedule
+    if list_schedule is True:
+        bot.send_message(message.chat.id, f'*Сначала надо выкл авто рассылку!*☝', reply_markup=main_menu(),
+                         parse_mode="Markdown")
     else:
-        bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
-    bot.send_message(message.chat.id, '*Сделайте выбор:🤔*', reply_markup=main_menu(), parse_mode="Markdown")
+        if list_subscriptions[7] is True:
+            list_subscriptions[7] = False
+            bot.send_message(message.chat.id, f'*Подписка успешно отключена!*🔕', reply_markup=main_menu(), parse_mode="Markdown")
+        else:
+            bot.send_message(message.chat.id, '*Подписки нету!*🙄', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda message: message.text == "❓Информация/Мои подписки")
@@ -725,20 +825,18 @@ def handle_buttons(message):
                                       f'\n', parse_mode="Markdown")
     bot.send_message(message.chat.id, f'*Ваши подписки:*\n', parse_mode="Markdown")
     info_subscription = info_help_subscription()
-
     if info_subscription is False:
         bot.send_message(message.chat.id, f'*Подписок нет!😟*\n', parse_mode="Markdown")
     else:
         for i in range(len(info_subscription)):
             bot.send_message(message.chat.id, f'*{info_subscription[i][0]} - {info_subscription[i][1]}*', parse_mode="Markdown")
     if list_schedule is False:
-        bot.send_message(message.chat.id, f'*Автоматическая рассылка отключена!😟*\n', parse_mode="Markdown")
+        bot.send_message(message.chat.id, f'*Автоматическая рассылка отключена!😟*\n', reply_markup=main_menu(), parse_mode="Markdown")
     else:
-        bot.send_message(message.chat.id, f'*Автоматическая рассылка включена!✅*\n', parse_mode="Markdown")
+        bot.send_message(message.chat.id, f'*Автоматическая рассылка включена!✅*\n', reply_markup=main_menu(), parse_mode="Markdown")
 
 
 list_subscriptions = [False, False, False, False, False, False, False, False]
-list_schedule = False
 
 
 def info_help_subscription():
@@ -759,7 +857,7 @@ def info_help_subscription():
 
 @bot.message_handler(func=lambda message: True)
 def unknown_command(message):
-    bot.send_message(message.chat.id, "*Я не понимаю эту команду!*🙄", parse_mode="Markdown")
+    bot.send_message(message.chat.id, "*Я не понимаю эту команду!*🙄", reply_markup=main_menu(), parse_mode="Markdown")
 
 
 bot.polling()
