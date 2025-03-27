@@ -1,0 +1,1 @@
+# url = f'https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid={WEATHER_API_KEY}'
