@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка еды</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="logo.png" alt="Logo" class="logo">
+        </header>
+        <div id="output"></div>
+        <div id="map-modal">
+            <div id="map">
+                <div id="center-marker"></div>
+                <button class="ok-button" onclick="closeMap()">OK</button>
+            </div>
+        </div>
+    </div>
+
+  
+
+    <script src="https://yandex.st/jquery/2.2.3/jquery.min.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=31df7a72-4554-4525-a569-9e509470153f"></script>
+    <script src="map.js"></script>
+    <script src="window_for_map.js"></script>
+</body>
+</html>
