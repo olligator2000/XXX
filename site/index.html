@@ -11,11 +11,13 @@
         <header>
             <img src="logo.png" alt="Logo" class="logo">
         </header>
+        <span class="wheretaking">Куда везём?</span>
         <div id="output"></div>
         <div id="map-modal">
+            <button class="ok-button" onclick="closeMap()">OK</button>
             <div id="map">
                 <div id="center-marker"></div>
-                <button class="ok-button" onclick="closeMap()">OK</button>
+                
             </div>
         </div>
     </div>
@@ -26,5 +28,6 @@
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=31df7a72-4554-4525-a569-9e509470153f"></script>
     <script src="map.js"></script>
     <script src="window_for_map.js"></script>
+    <script src="street_block.js"></script>
 </body>
 </html>

@@ -6,82 +6,384 @@ body, html {
     font-family: Arial, sans-serif;
 }
 
-/* #map {
-    width: 600px; 
-    height: 400px;  
-    position: relative;
-} */
 
-.container {
-    display: flex;
-    align-items: center; /* Выравнивание по вертикали */
-}
 
-header {
-    padding: 10px;
-    text-align: left;
-}
-
-.logo {
-    max-width: 300px;
-    height: auto;
-}
-
-#center-marker {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 32px;
-    height: 32px;
-    background-image: url('metka.png');
-    background-size: contain;
-    z-index: 999;
-    pointer-events: none;
-}
-
-#output {
-    border: 2px solid #ccc;
-    background-color: #f9f9f9;
-    padding: 8px;
-    width: 500px;
-    height: 20px;
-    overflow: auto;
-    margin: 18px left;
-    border-radius: 15px;
+/* Стили для смартфонов (от 320px до 420px) */
+@media (min-width: 320px) and (max-width: 420px) {
+    .container {
+        display: flex;
+        align-items: center; /* Выравнивание по вертикали */
+    }
     
-}   
+    header {
+        padding: 10px;
+        text-align: left;
+    }
+    
+    .logo {
+        max-width: 300px;
+        height: auto;
+    }
+    
+    #center-marker {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 32px;
+        height: 32px;
+        background-image: url('metka.png');
+        background-size: contain;
+        z-index: 999;
+        pointer-events: none;
+    }
+    
+    #output {
+        border: 2px solid #ccc;
+        background-color: #f9f9f9;
+        padding: 8px;
+        /* width: 100px; */
+        display: inline-block; /* Чтобы блок имел ширину по содержимому */
+        white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+        height: 20px;
+        overflow: auto;
+        margin: 18px left;
+        border-radius: 15px;
+        
+    }   
+    
+    #map-modal {
+        display: none; /* Скрываем модальное окно по умолчанию */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(236, 233, 233, 0.062); /* Темный фон */
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .ok-button {
+        position: relative;
+        margin-top: 0px;
+        left: 840px;
+        top: -288px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .ok-button:hover {
+        background-color: #0056b3;
+    }
+    
+    #map {
+        width: 800px;
+        height: 500px;
+        background-color: #686363; /* Белый фон для карты */
+        position: relative;
+        padding: 20px;
+        border-radius: 8px;
+    }
 
-#map-modal {
-    display: none; /* Скрываем модальное окно по умолчанию */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(236, 233, 233, 0.062); /* Темный фон */
-    justify-content: center;
-    align-items: center;
+    .wheretaking {
+        border: 2px solid rgb(189, 55, 55);
+        background-color: #ad8e8e;
+        padding: 8px;
+        width: 100px;
+        display: inline-block; /* Чтобы блок имел ширину по содержимому */
+        white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+        height: 22px;
+        overflow: auto;
+        margin: 20px left;
+        border-radius: 17px;
+    }
 }
 
-.ok-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.ok-button:hover {
-    background-color: #0056b3;
+/* Стили для планшетов (от 768px до 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        display: flex;
+        align-items: center; /* Выравнивание по вертикали */
+    }
+    
+    header {
+        padding: 10px;
+        text-align: left;
+    }
+    
+    .logo {
+        max-width: 300px;
+        height: auto;
+    }
+    
+    #center-marker {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 32px;
+        height: 32px;
+        background-image: url('metka.png');
+        background-size: contain;
+        z-index: 999;
+        pointer-events: none;
+    }
+    
+    #output {
+        border: 2px solid #ccc;
+        background-color: #f9f9f9;
+        padding: 8px;
+        /* width: 100px; */
+        display: inline-block; /* Чтобы блок имел ширину по содержимому */
+        white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+        height: 20px;
+        overflow: auto;
+        margin: 18px left;
+        border-radius: 15px;
+        
+    }   
+    
+    #map-modal {
+        display: none; /* Скрываем модальное окно по умолчанию */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(236, 233, 233, 0.062); /* Темный фон */
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .ok-button {
+        position: relative;
+        margin-top: 0px;
+        left: 840px;
+        top: -288px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .ok-button:hover {
+        background-color: #0056b3;
+    }
+    
+    #map {
+        width: 800px;
+        height: 500px;
+        background-color: #686363; /* Белый фон для карты */
+        position: relative;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .wheretaking {
+        border: 2px solid rgb(189, 55, 55);
+        background-color: #ad8e8e;
+        padding: 8px;
+        width: 100px;
+        display: inline-block; /* Чтобы блок имел ширину по содержимому */
+        white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+        height: 22px;
+        overflow: auto;
+        margin: 20px left;
+        border-radius: 17px;
+    }
 }
 
-#map {
-    width: 800px;
-    height: 500px;
-    background-color: #686363; /* Белый фон для карты */
-    position: relative;
-    padding: 20px;
-    border-radius: 8px;
+/* Стили для ноутуков (от 1280px до 1440px) */
+@media (min-width: 1280px) and (max-width: 1440px) {
+    .container {
+        display: flex;
+        align-items: center; /* Выравнивание по вертикали */
+    }
+    
+    header {
+        padding: 10px;
+        text-align: left;
+    }
+    
+    .logo {
+        max-width: 300px;
+        height: auto;
+    }
+    
+    #center-marker {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 32px;
+        height: 32px;
+        background-image: url('metka.png');
+        background-size: contain;
+        z-index: 999;
+        pointer-events: none;
+    }
+    
+    #output {
+        border: 2px solid #ccc;
+        background-color: #f9f9f9;
+        padding: 8px;
+        /* width: 100px; */
+        display: inline-block; /* Чтобы блок имел ширину по содержимому */
+        white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+        height: 20px;
+        overflow: auto;
+        margin: 18px left;
+        border-radius: 15px;
+        
+    }   
+    
+    #map-modal {
+        display: none; /* Скрываем модальное окно по умолчанию */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(236, 233, 233, 0.062); /* Темный фон */
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .ok-button {
+        position: relative;
+        margin-top: 0px;
+        left: 840px;
+        top: -288px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .ok-button:hover {
+        background-color: #0056b3;
+    }
+    
+    #map {
+        width: 800px;
+        height: 500px;
+        background-color: #686363; /* Белый фон для карты */
+        position: relative;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .wheretaking {
+        border: 2px solid rgb(189, 55, 55);
+        background-color: #ad8e8e;
+        padding: 8px;
+        width: 100px;
+        display: inline-block; /* Чтобы блок имел ширину по содержимому */
+        white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+        height: 22px;
+        overflow: auto;
+        margin: 20px left;
+        border-radius: 17px;
+    }
+}
+
+/* Стили для компьютеров с мониторами (от 1440px до 2160px) */
+@media (min-width: 1440px) and (max-width: 2160px) {
+    .container {
+        display: flex;
+        align-items: center; /* Выравнивание по вертикали */
+    }
+    
+    header {
+        padding: 10px;
+        text-align: left;
+    }
+    
+    .logo {
+        max-width: 300px;
+        height: auto;
+    }
+    
+    #center-marker {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 32px;
+        height: 32px;
+        background-image: url('metka.png');
+        background-size: contain;
+        z-index: 999;
+        pointer-events: none;
+    }
+    
+    #output {
+        border: 2px solid #ccc;
+        background-color: #f9f9f9;
+        padding: 8px;
+        /* width: 100px; */
+        display: inline-block; /* Чтобы блок имел ширину по содержимому */
+        white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+        height: 20px;
+        overflow: auto;
+        margin: 18px left;
+        border-radius: 15px;
+        
+    }   
+    
+    #map-modal {
+        display: none; /* Скрываем модальное окно по умолчанию */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(201, 57, 57, 0.062); /* Темный фон */
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .ok-button {
+        position: relative;
+        margin-top: 0px;
+        left: 840px;
+        top: -288px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .ok-button:hover {
+        background-color: #0056b3;
+    }
+    
+    #map {
+        width: 800px;
+        height: 500px;
+        background-color: #686363; /* Белый фон для карты */
+        position: relative;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .wheretaking {
+        border: 2px solid rgb(189, 55, 55);
+        background-color: #ad8e8e;
+        padding: 8px;
+        width: 100px;
+        display: inline-block; /* Чтобы блок имел ширину по содержимому */
+        white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+        height: 22px;
+        overflow: auto;
+        margin: 20px left;
+        border-radius: 17px;
+    }
 }
