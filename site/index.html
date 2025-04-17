@@ -11,23 +11,142 @@
         <header>
             <img src="logo.png" alt="Logo" class="logo">
         </header>
-        <span class="wheretaking">Куда везём?</span>
+        <div id="metka"></div>
         <div id="output"></div>
         <div id="map-modal">
             <button class="ok-button" onclick="closeMap()">OK</button>
             <div id="map">
                 <div id="center-marker"></div>
-                
             </div>
         </div>
     </div>
 
+    <div class="header">
+        <div class="catalog-wrapper">
+            <div class="catalog-btn" id="catalogBtn">
+                Каталог товаров
+            </div>
+            
+            <div class="categories" id="categories">
+                <div class="category">
+                    Хлебобулочные изделия
+                    <div class="submenu">
+                        <div class="submenu-item">Белый хлеб</div>
+                        <div class="submenu-item">Черный хлеб</div>
+                        <div class="submenu-item">Булочки с маком</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Молочная продукция
+                    <div class="submenu">
+                        <div class="submenu-item">Молоко 2.5%</div>
+                        <div class="submenu-item">Кефир 1%</div>
+                        <div class="submenu-item">Творог 5%</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Мясная продукция
+                    <div class="submenu">
+                        <div class="submenu-item">Говядина</div>
+                        <div class="submenu-item">Свинина</div>
+                        <div class="submenu-item">Курица</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Макаронные изделия
+                    <div class="submenu">
+                        <div class="submenu-item">Спагетти</div>
+                        <div class="submenu-item">Перья</div>
+                        <div class="submenu-item">Ракушки</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Овощи
+                    <div class="submenu">
+                        <div class="submenu-item">Картофель</div>
+                        <div class="submenu-item">Морковь</div>
+                        <div class="submenu-item">Лук</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Фрукты
+                    <div class="submenu">
+                        <div class="submenu-item">Яблоки</div>
+                        <div class="submenu-item">Бананы</div>
+                        <div class="submenu-item">Апельсины</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Напитки
+                    <div class="submenu">
+                        <div class="submenu-item">Сок апельсиновый</div>
+                        <div class="submenu-item">Минеральная вода</div>
+                        <div class="submenu-item">Лимонад</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Кондитерские изделия
+                    <div class="submenu">
+                        <div class="submenu-item">Шоколад молочный</div>
+                        <div class="submenu-item">Печенье овсяное</div>
+                        <div class="submenu-item">Вафли</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Бакалея
+                    <div class="submenu">
+                        <div class="submenu-item">Крупа гречневая</div>
+                        <div class="submenu-item">Рис</div>
+                        <div class="submenu-item">Мука</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Консервы
+                    <div class="submenu">
+                        <div class="submenu-item">Горошек зеленый</div>
+                        <div class="submenu-item">Кукуруза</div>
+                        <div class="submenu-item">Тушенка</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Замороженные продукты
+                    <div class="submenu">
+                        <div class="submenu-item">Овощная смесь</div>
+                        <div class="submenu-item">Пельмени</div>
+                        <div class="submenu-item">Мороженое</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Чай и кофе
+                    <div class="submenu">
+                        <div class="submenu-item">Чай черный</div>
+                        <div class="submenu-item">Чай зеленый</div>
+                        <div class="submenu-item">Кофе молотый</div>
+                    </div>
+                </div>
+                <div class="category">
+                    Масла и соусы
+                    <div class="submenu">
+                        <div class="submenu-item">Масло подсолнечное</div>
+                        <div class="submenu-item">Кетчуп</div>
+                        <div class="submenu-item">Майонез</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="search">
+            <input type="text" class="search-input" placeholder="Умный поиск">
+            <span class="search-icon">🔍</span>
+        </div>
+    </div>
   
 
     <script src="https://yandex.st/jquery/2.2.3/jquery.min.js"></script>
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=31df7a72-4554-4525-a569-9e509470153f"></script>
+    <!-- <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=31df7a72-4554-4525-a569-9e509470153f"></script> -->
     <script src="map.js"></script>
     <script src="window_for_map.js"></script>
     <script src="street_block.js"></script>
+    <script src="menu.js"></script>
 </body>
 </html>
